@@ -1,0 +1,2 @@
+A 1 page summary of how you solved the loop detection. 
+ If you used code from a website please include the URL for the reference
