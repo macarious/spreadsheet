@@ -78,7 +78,8 @@ export class FormulaEvaluator {
     this._result = resultValue;
 
     // if there are still tokens in the formula set the errorOccured flag
-    if (this._currentFormula.length > 0) {
+    // if an error has occured then we dont update the error message
+    if (this._currentFormula.length > 0 && !this._errorOccured) {
       this._errorOccured = true;
       this._errorMessage = ErrorMessages.invalidFormula;
     }
@@ -104,6 +105,9 @@ export class FormulaEvaluator {
    * @returns The value of the factor in the tokenized formula
    */
   private expression(): number {
+    if (this._errorOccured) {
+      return this._lastResult;
+    }
     let result = this.term();
     while (this._currentFormula.length > 0 && (this._currentFormula[0] === "+" || this._currentFormula[0] === "-")) {
       let operator = this._currentFormula.shift();
@@ -126,6 +130,9 @@ export class FormulaEvaluator {
    *  
    */
   private term(): number {
+    if (this._errorOccured) {
+      return this._lastResult;
+    }
     let result = this.factor();
     while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/")) {
       let operator = this._currentFormula.shift();
@@ -155,6 +162,9 @@ export class FormulaEvaluator {
    * 
    */
   private factor(): number {
+    if (this._errorOccured) {
+      return this._lastResult;
+    }
     let result = 0;
     // if the formula is empty set errorOccured to true 
     // and set the errorMessage to "PARTIAL"
