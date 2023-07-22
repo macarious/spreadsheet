@@ -1,2 +1,26 @@
 A 1 page summary of how you solved the loop detection. 
  If you used code from a website please include the URL for the reference
+
+# Detection of Circular Dependency
+The following steps are used to detect circular dependencies between cells. To solve the circular dependency problem, I used a depth first search algorithm to check for circular dependencies, following these steps:
+1. First, I created a visited set to keep track of the cells that have been visited.
+2. Then I created a recursive function called isCircular that takes a cell label as a parameter.
+3. The isCircular function checks to see if the cell has been visited.
+4. If the cell has not been visited, it adds the cell to the visited set.
+5. Then it gets the dependencies for the cell.
+6. If the cell depends on the current cell, then it returns true.
+7. Otherwise, it recursively calls itself for each cell that the cell depends on.
+8. If any of the recursive calls return true, then it returns true.
+9. Otherwise, it returns false.
+10. If the cell has been visited, then it returns false.
+
+# Determining of Computation Order
+The following steps are used to determine the computation order of cells. To get the computation order, I used a topological sort algorithm, following these steps:
+1. First, I created a visited array to keep track of the cells that have been visited.
+2. Then I created a recursive function called expandDependencies that takes a cell label as a parameter.
+3. The expandDependencies function checks to see if the cell has been visited.
+4. If the cell has not been visited, it adds the cell to the visited array.
+5. Then it gets the dependencies for the cell.
+6. Then it recursively calls itself for each cell that the cell depends on.
+7. Then it adds the cell to the computation order.
+8. If the cell has been visited, then it returns.
