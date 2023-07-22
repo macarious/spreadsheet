@@ -30,14 +30,23 @@ import FormulaEvaluator from "./FormulaEvaluator";
 
 export default class CalculationManager {
 
-
-
     // Update the dependency graph of the sheet
     // get the computation order
     // compute the cells in the computation order
     // update the cells in the sheet memory
     public evaluateSheet(sheetMemory: SheetMemory): void {
+            
+        // update the dependencies
+        this.updateDependencies(sheetMemory);
 
+        // get the computation order
+        const computationOrder = this.updateComputationOrder(sheetMemory);
+
+        // compute the cells in the computation order
+        this.computeCells(computationOrder, sheetMemory);
+
+        // update the cells in the sheet memory
+        this.updateCells(sheetMemory);
     }
 
 
@@ -46,13 +55,33 @@ export default class CalculationManager {
      *  checck to see if it is ok to add a cell to the formula in the current cell.
      * 
      * @param {string} currentCellLabel - The label of the cell
-     * @param {sheetMemory} SheetMemory - The sheet memory
+     * @param {SheetMemory} sheetMemory - The sheet memory
      * */
     public okToAddNewDependency(currentCellLabel: string, newDependsOnCell: string, sheetMemory: SheetMemory): boolean {
-        // Use the data in the spreadsheet in the cells to determine if it is ok to insert the new dependency
-
-        return true;
+        const visited: Set<string> = new Set();
+    
+        const isCircular = (cellLabel: string): boolean => {
+            if (!visited.has(cellLabel)) {
+                visited.add(cellLabel);
+                const cell = sheetMemory.getCellByLabel(cellLabel);
+                const dependsOn = cell.getDependsOn();
+    
+                if (dependsOn.includes(currentCellLabel)) {
+                    return true;
+                }
+    
+                for (const dependsOnCell of dependsOn) {
+                    if (isCircular(dependsOnCell)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+    
+        return !isCircular(newDependsOnCell);
     }
+    
 
 
 
@@ -60,26 +89,163 @@ export default class CalculationManager {
      * use the formulas to extract the dependencies for each cell
      * */
     public updateDependencies(sheetMemory: SheetMemory) {
+        // for each cell in the sheet
+        // get the formula
+        // get the dependencies
+        // set the dependencies for the cell
 
+        for (let row = 0; row < sheetMemory.getNumRows(); row++) {
+            for (let column = 0; column < sheetMemory.getNumColumns(); column++) {
+                const cell = sheetMemory.getCellByCoordinates(column, row);
+                const formula = cell.getFormula();
+                const dependencies = this.getDependencies(formula);
+                cell.setDependsOn(dependencies);
+            }
+        }
     }
-
 
     /**
      * get the computation order for the sheet
-     * @param {sheetMemory} SheetMemory - The sheet memory
+     * @param {SheetMemory} sheetMemory - The sheet memory
      * @returns {string[]} - The computation order 
      * topological sort (hint)
      * 
      * */
     public updateComputationOrder(sheetMemory: SheetMemory): string[] {
-        let resultingComputationOrder: string[] = [];
+        const computationOrder: string[] = [];
+        const visited: string[] = [];
+    
+        for (let row = 0; row < sheetMemory.getNumRows(); row++) {
+            for (let column = 0; column < sheetMemory.getNumColumns(); column++) {
+                const cellLabel = this.getLabelFromCoordinates(column, row);
+                if (!visited.includes(cellLabel)) {
+                    this.expandDependencies(cellLabel, sheetMemory, computationOrder, visited);
+                }
+            }
+        }
+    
+        // Sort the computationOrder array based on the number of dependencies for each cell
+        computationOrder.sort((cellA, cellB) => {
+            const cellADependencies = sheetMemory.getCellByLabel(cellA).getDependsOn().length;
+            const cellBDependencies = sheetMemory.getCellByLabel(cellB).getDependsOn().length;
+            return cellADependencies - cellBDependencies;
+        });
+    
+        return computationOrder;
+    }
+    
+    
 
-        return resultingComputationOrder;
+    /**
+     * expand the dependencies of a cell recursively
+     * @param {string} cellLabel - The label of the cell
+     * @param {SheetMemory} sheetMemory - The sheet memory
+     * @param {string[]} computationOrder - The computation order
+     * @param {string[]} visited - The visited cells
+     * @returns {void}
+     * */
+    public expandDependencies(
+        cellLabel: string,
+        sheetMemory: SheetMemory,
+        computationOrder: string[],
+        visited: string[]
+    ) {
+        const cell = sheetMemory.getCellByLabel(cellLabel);
+        const dependsOn = cell.getDependsOn();
+    
+        // If the cell is not in the visited array,
+        // add the cell to the visited array
+        // for each cell that the cell depends on
+        // expand the dependencies of the cell
+        // add the cell to the computation order
+    
+        if (!visited.includes(cellLabel)) {
+            visited.push(cellLabel);
+            for (let dependsOnCell of dependsOn) {
+                this.expandDependencies(dependsOnCell, sheetMemory, computationOrder, visited);
+            }
+            computationOrder.push(cellLabel);
+        }
+    }
+    
+
+    /**
+     * compute the cells in the computation order
+     * @param {string[]} computationOrder - The computation order
+     * @param {SheetMemory} sheetMemory - The sheet memory
+     * */
+    public computeCells(computationOrder: string[], sheetMemory: SheetMemory) {
+        // for each cell in the computation order
+        // get the formula
+        // evaluate the formula
+        // set the value of the cell to the result of the evaluation
+
+        for (let cellLabel of computationOrder) {
+            const cell = sheetMemory.getCellByLabel(cellLabel);
+            const formula = cell.getFormula();
+            const formulaEvaluator = new FormulaEvaluator(sheetMemory);
+            formulaEvaluator.evaluate(formula);
+            const result = formulaEvaluator.result;
+            cell.setValue(result);
+        }
     }
 
+    /**
+     * update the cells in the sheet memory
+     * @param {SheetMemory} sheetMemory - The sheet memory
+     * */
+    public updateCells(sheetMemory: SheetMemory) {
+        // for each cell in the sheet
+        // get the value
+        // set the value in the sheet memory
 
+        for (let row = 0; row < sheetMemory.getNumRows(); row++) {
+            for (let column = 0; column < sheetMemory.getNumColumns(); column++) {
+                const cell = sheetMemory.getCellByCoordinates(column, row);
+                const value = cell.getValue();
+                sheetMemory.setValueByCoordinates(column, row, value);
+            }
+        }
+    }
+
+    /**
+     * get the dependencies for a formula
+     * @param {string[]} formula - The formula
+     * @returns {string[]} - The dependencies
+     * */
+    public getDependencies(formula: string[]): string[] {
+        let resultingDependencies: string[] = [];
+
+        // for each token in the formula
+        // if the token is a cell reference
+        // add the cell reference to the dependencies
+
+        for (let token of formula) {
+            if (this.isCellReference(token)) {
+                resultingDependencies.push(token);
+            }
+        }
+
+        return resultingDependencies;
+    }    
+
+    /**
+     * check to see if a token is a cell reference
+     * @param {string} token - The token
+     * @returns {boolean} - true if the token is a cell reference
+     * */
+    private isCellReference(token: string): boolean {
+        return Cell.isValidCellLabel(token);
+    }
+
+    /**
+     * get the label of a cell from the coordinates
+     * @param {number} column - The column
+     * @param {number} row - The row
+     * @returns {string} - The label
+     * */
+    private getLabelFromCoordinates(column: number, row: number): string {
+        return String.fromCharCode(column + 65) + (row + 1);
+    }
 }
-
-
-
 

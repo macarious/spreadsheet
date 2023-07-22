@@ -92,6 +92,21 @@ export class SheetMemory {
         return [this._currentColumn, this._currentRow];
     }
 
+    getCurrentCellFormula(): string[] {
+        return this._cells[this._currentRow][this._currentColumn].getFormula();
+    }
+
+    getSheetDisplayStrings(): string[][] {
+        const displayString: string[][] = [];
+        for (let row = 0; row < this._numRows; row++) {
+            displayString[row] = [];
+            for (let column = 0; column < this._numColumns; column++) {
+                displayString[row][column] = this._cells[row][column].getDisplayString();
+            }
+        }
+        return displayString;
+    }
+
     setCurrentCell(cell: Cell): void {
         this._cells[this._currentRow][this._currentColumn] = cell;
     }
@@ -114,7 +129,10 @@ export class SheetMemory {
         this._currentColumn = coordinates[0];
         this._currentRow = coordinates[1];
     }
-    
+
+    setValueByCoordinates(column: number, row: number, value: number): void {
+        this._cells[row][column].setValue(value);
+    }
 }
 
 
