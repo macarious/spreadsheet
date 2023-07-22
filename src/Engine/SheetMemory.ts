@@ -133,10 +133,6 @@ export class SheetMemory {
         this._currentColumn = coordinates[0];
         this._currentRow = coordinates[1];
     }
-
-    setValueByCoordinates(column: number, row: number, value: number): void {
-        this._cells[row][column].setValue(value);
-    }
 }
 
 

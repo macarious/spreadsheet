@@ -31,9 +31,6 @@ function SpreadSheet() {
 
 
   function updateDisplayValues(): void {
-    console.log("updateDisplayValues called")
-    console.log("formulaString: " + spreadSheetController.getFormulaString())
-    console.log("resultString: " + spreadSheetController.getResultString())
     setFormulaString(spreadSheetController.getFormulaString());
     setResultString(spreadSheetController.getResultString());
     setStatusString(spreadSheetController.getEditStatusString());
@@ -56,7 +53,6 @@ function SpreadSheet() {
    */
   async function onCommandButtonClick(text: string): Promise<void> {
 
-
     switch (text) {
       case ButtonNames.edit_toggle:
         if (currentlyEditing) {
@@ -75,6 +71,8 @@ function SpreadSheet() {
         spreadSheetController.clearFormula();
         break;
 
+      default:
+        break;
     }
     // update the display values
     updateDisplayValues();
@@ -99,7 +97,6 @@ function SpreadSheet() {
 
   }
 
-
   /**
    * 
    * @param event 
@@ -110,13 +107,8 @@ function SpreadSheet() {
    */
   function onCellClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const cellLabel = event.currentTarget.getAttribute("cell-label");
-    // calculate the current row and column of the clicked on cell
-
-    console.log("cell clicked: " + cellLabel)
-
     const editStatus = spreadSheetController.getEditStatus();
     let realCellLabel = cellLabel ? cellLabel : "";
-
 
     // if the edit status is true then add the token to the machine
     if (editStatus) {

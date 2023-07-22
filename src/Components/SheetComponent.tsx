@@ -16,23 +16,26 @@ interface SheetComponentProps {
   currentlyEditing: boolean;
 } // interface SheetComponentProps
 
-
 //Cell.columnRowToCell(colIndex, rowIndex) will return the cell label
 // you can use this to set the value of the button
 
-function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }: SheetComponentProps) {
-
+function SheetComponent({
+  cellsValues,
+  onClick,
+  currentCell,
+  currentlyEditing,
+}: SheetComponentProps) {
   /**
-   * 
-   * @param cell 
+   *
+   * @param cell
    * @returns the class name for the cell
-   * 
+   *
    * if the cell is the current cell and the sheet is in edit mode
    * then the cell will be rendered with the class name "cell-editing"
-   * 
+   *
    * if the cell is the current cell and the sheet is not in edit mode
    * then the cell will be rendered with the class name "cell-selected"
-   * 
+   *
    * otherwise the cell will be rendered with the class name "cell"
    */
   function getCellClass(cell: string) {
@@ -45,17 +48,47 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
     return "cell";
   }
 
+  /**
+   *
+   * @param column
+   * @returns the letter for the column
+   *
+   * 0 -> A
+   * 1 -> B
+   * etc.
+   */
+  function columnToLetter(column: number): string {
+    let temp: number;
+    let letter: string = "";
+    while (column >= 0) {
+      temp = column % 26;
+      letter = String.fromCharCode(temp + 65) + letter;
+      column = column / 26 - 1;
+    }
+    return letter;
+  }
+
   return (
     <table className="sheet">
       <tbody>
+        <tr>
+          <td></td>
+          {cellsValues[0].map((cell, colIndex) => (
+            <td key={colIndex}>{columnToLetter(colIndex)}</td>
+          ))}
+        </tr>
         {cellsValues.map((row, rowIndex) => (
           <tr key={rowIndex}>
+            <td className="row-number">{rowIndex + 1}</td>
             {row.map((cell, colIndex) => (
               <td key={colIndex}>
                 <button
-                  className={getCellClass(Cell.columnRowToCell(colIndex, rowIndex))}
+                  className={getCellClass(
+                    Cell.columnRowToCell(colIndex, rowIndex)
+                  )}
                   onClick={onClick}
                   cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
+                  data-testid={Cell.columnRowToCell(colIndex, rowIndex)}
                 >
                   {cell}
                 </button>
@@ -67,10 +100,5 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
     </table>
   );
 } // SheetComponent
-
-
-
-
-
 
 export default SheetComponent;

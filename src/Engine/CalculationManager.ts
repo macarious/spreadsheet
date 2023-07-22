@@ -198,11 +198,12 @@ export default class CalculationManager {
                 cell.setValue(0);
                 cell.setError(ErrorMessages.invalidCell);
             } else {
+                cell.setError("");
                 const formula = cell.getFormula();
                 const formulaEvaluator = new FormulaEvaluator(sheetMemory);
                 formulaEvaluator.evaluate(formula);
                 cell.setValue(formulaEvaluator.result);
-                cell.setError("");
+                cell.setError(formulaEvaluator.error);
             }
         }
     }

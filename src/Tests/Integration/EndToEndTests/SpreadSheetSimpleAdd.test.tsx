@@ -17,7 +17,7 @@ import { after } from "node:test";
 import { act } from "react-dom/test-utils";
 
 
-describe("SpreadSheet 1 + 2 ", () => {
+describe("SpreadSheet 1 + 2", () => {
     afterEach(() => {
         cleanup();
     });
