@@ -116,6 +116,10 @@ export class SheetMemory {
     }
 
     setCurrentCellFormula(formula: string[]): void {
+        if (formula.length === 0) {
+            this._cells[this._currentRow][this._currentColumn].setFormula([]);
+            return;
+        }
         this._cells[this._currentRow][this._currentColumn].setFormula(formula);
     }
 

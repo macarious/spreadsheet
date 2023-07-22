@@ -31,7 +31,9 @@ function SpreadSheet() {
 
 
   function updateDisplayValues(): void {
-
+    console.log("updateDisplayValues called")
+    console.log("formulaString: " + spreadSheetController.getFormulaString())
+    console.log("resultString: " + spreadSheetController.getResultString())
     setFormulaString(spreadSheetController.getFormulaString());
     setResultString(spreadSheetController.getResultString());
     setStatusString(spreadSheetController.getEditStatusString());
@@ -109,6 +111,8 @@ function SpreadSheet() {
   function onCellClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const cellLabel = event.currentTarget.getAttribute("cell-label");
     // calculate the current row and column of the clicked on cell
+
+    console.log("cell clicked: " + cellLabel)
 
     const editStatus = spreadSheetController.getEditStatus();
     let realCellLabel = cellLabel ? cellLabel : "";

@@ -23,8 +23,8 @@
 
 import SheetMemory from "./SheetMemory";
 import Cell from "./Cell";
-import FormulaBuilder from "./FormulaBuilder";
 import FormulaEvaluator from "./FormulaEvaluator";
+import { ErrorMessages } from "./GlobalDefinitions";
 
 
 
@@ -182,31 +182,32 @@ export default class CalculationManager {
 
         for (let cellLabel of computationOrder) {
             const cell = sheetMemory.getCellByLabel(cellLabel);
-            const formula = cell.getFormula();
-            const formulaEvaluator = new FormulaEvaluator(sheetMemory);
-            formulaEvaluator.evaluate(formula);
-            const result = formulaEvaluator.result;
-            cell.setValue(result);
-        }
-    }
-
-    /**
-     * update the cells in the sheet memory
-     * @param {SheetMemory} sheetMemory - The sheet memory
-     * */
-    public updateCells(sheetMemory: SheetMemory) {
-        // for each cell in the sheet
-        // get the value
-        // set the value in the sheet memory
-
-        for (let row = 0; row < sheetMemory.getNumRows(); row++) {
-            for (let column = 0; column < sheetMemory.getNumColumns(); column++) {
-                const cell = sheetMemory.getCellByCoordinates(column, row);
-                const value = cell.getValue();
-                sheetMemory.setValueByCoordinates(column, row, value);
+            const dependsOn = cell.getDependsOn();
+            let emptyCell = false;
+            
+            // If any of the cells it depends on is empty, set the value to 0 and set the error to invalidCell
+            // Otherwise evaluate the formula and set the value and the error for the cell
+            for (let dependsOnCell of dependsOn) {
+                const cell = sheetMemory.getCellByLabel(dependsOnCell);
+                if (cell.getValue() === 0) {
+                    emptyCell = true;
+                    break;
+                }
+            }
+            if (emptyCell) {
+                cell.setValue(0);
+                cell.setError(ErrorMessages.invalidCell);
+            } else {
+                const formula = cell.getFormula();
+                const formulaEvaluator = new FormulaEvaluator(sheetMemory);
+                formulaEvaluator.evaluate(formula);
+                cell.setValue(formulaEvaluator.result);
+                cell.setError("");
             }
         }
     }
+
+
 
     /**
      * get the dependencies for a formula
@@ -246,6 +247,27 @@ export default class CalculationManager {
      * */
     private getLabelFromCoordinates(column: number, row: number): string {
         return String.fromCharCode(column + 65) + (row + 1);
+    }
+
+    /**
+     * update the cells in the sheet memory
+     * @param {SheetMemory} sheetMemory - The sheet memory
+     * */
+    private updateCells(sheetMemory: SheetMemory) {
+        // for each cell in the sheet
+        // get the value
+        // get the error
+        // set the value and the error for the cell
+
+        for (let row = 0; row < sheetMemory.getNumRows(); row++) {
+            for (let column = 0; column < sheetMemory.getNumColumns(); column++) {
+                const cell = sheetMemory.getCellByCoordinates(column, row);
+                const value = cell.getValue();
+                const error = cell.getError();
+                cell.setValue(value);
+                cell.setError(error);
+            }
+        }
     }
 }
 

@@ -46,11 +46,29 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
   }
 
   return (
-    <div className="sheet">
-      i am a fancy table
-    </div>
+    <table className="sheet">
+      <tbody>
+        {cellsValues.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((cell, colIndex) => (
+              <td key={colIndex}>
+                <button
+                  className={getCellClass(Cell.columnRowToCell(colIndex, rowIndex))}
+                  onClick={onClick}
+                  cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
+                >
+                  {cell}
+                </button>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 } // SheetComponent
+
+
 
 
 

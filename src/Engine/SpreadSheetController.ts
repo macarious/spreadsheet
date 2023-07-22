@@ -241,14 +241,13 @@ export class SpreadSheetController {
     let inputRows = memoryDisplayValues.length;
     let inputColumns = memoryDisplayValues[0].length;
 
-    for (let outputRow = 0; outputRow < inputColumns; outputRow++) {
+    for (let outputRow = 0; outputRow < inputRows; outputRow++) {
       guiDisplayValues[outputRow] = [];
-      for (let outputColumn = 0; outputColumn < inputRows; outputColumn++) {
-        guiDisplayValues[outputRow][outputColumn] = memoryDisplayValues[outputColumn][outputRow];
-      }
+      for (let outputColumn = 0; outputColumn < inputColumns; outputColumn++) {
+        guiDisplayValues[outputRow][outputColumn] = memoryDisplayValues[outputRow][outputColumn];
+      }   
     }
-
-
+    
     return guiDisplayValues;
 
   }
