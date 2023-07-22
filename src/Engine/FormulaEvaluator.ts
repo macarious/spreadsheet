@@ -240,11 +240,22 @@ export class FormulaEvaluator {
    * 
    */
   getCellValue(token: TokenType): [number, string] {
+    // if the cell formula is empty return [0, ErrorMessages.invalidCell]
+    if (token === "") {
+      return [0, ErrorMessages.invalidCell];
 
-    return [0, ErrorMessages.invalidCell];
+    // if the cell formula is not empty get the cell value
+    } else {
+      let cell = this._sheetMemory.getCellByLabel(token);
+      let cellValue = cell.getValue();
+      let cellError = cell.getError();
+      if (cellError !== "") {
+        return [0, cellError];
+      } else {
+        return [cellValue, ""];
+      }
+    }
   }
-
-
 }
 
 export default FormulaEvaluator;

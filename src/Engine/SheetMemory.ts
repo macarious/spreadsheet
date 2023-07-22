@@ -44,9 +44,77 @@ export class SheetMemory {
 
         this._cells = [];
 
+        for (let row = 0; row < this._numRows; row++) {
+            this._cells[row] = [];
+            for (let column = 0; column < this._numColumns; column++) {
+                this._cells[row][column] = new Cell();
+                this._cells[row][column].setLabel(this.getLabelFromCoordinates(column, row));
+            }
+        }
     }
 
+    getNumRows(): number {
+        return this._numRows;
+    }
 
+    getNumColumns(): number {
+        return this._numColumns;
+    }
+
+    getCellByLabel(label: string): Cell {
+        const coordinates = this.getCoordinatesFromLabel(label);
+        return this.getCellByCoordinates(coordinates[0], coordinates[1]);
+    }
+
+    getCoordinatesFromLabel(label: string): number[] {
+        const column = label.charAt(0).toUpperCase();
+        const row = parseInt(label.substring(1));
+        const columnNumber = column.charCodeAt(0) - 65;
+        const rowNumber = row - 1;
+        return [columnNumber, rowNumber];
+    }
+
+    getLabelFromCoordinates(column: number, row: number): string {
+        const columnLabel = String.fromCharCode(column + 65);
+        const rowLabel = row + 1;
+        return columnLabel + rowLabel;
+    }
+
+    getCellByCoordinates(column: number, row: number): Cell {
+        return this._cells[row][column];
+    }
+
+    getCurrentCell(): Cell {
+        return this._cells[this._currentRow][this._currentColumn];
+    }
+
+    getWorkingCellByCoordinates(): number[] {
+        return [this._currentColumn, this._currentRow];
+    }
+
+    setCurrentCell(cell: Cell): void {
+        this._cells[this._currentRow][this._currentColumn] = cell;
+    }
+
+    setCurrentCellValue(value: number): void {
+        this._cells[this._currentRow][this._currentColumn].setValue(value);
+    }
+
+    setCurrentCellFormula(formula: string[]): void {
+        this._cells[this._currentRow][this._currentColumn].setFormula(formula);
+    }
+
+    setWorkingCellByCoordinates(column: number, row: number): void {
+        this._currentColumn = column;
+        this._currentRow = row;
+    }
+
+    setWorkingCellByLabel(label: string): void {
+        const coordinates = this.getCoordinatesFromLabel(label);
+        this._currentColumn = coordinates[0];
+        this._currentRow = coordinates[1];
+    }
+    
 }
 
 
