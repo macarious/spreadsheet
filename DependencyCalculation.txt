@@ -3,26 +3,28 @@ A 1 page summary of how you solved the loop detection.
 
 # Detection of Circular Dependency
 `okToAddNewDependency()`
-The following steps are used to detect circular dependencies between cells. To solve the circular dependency problem, I used a depth first search algorithm to check for circular dependencies, following these steps:
-1. First, I created a visited set to keep track of the cells that have been visited.
-2. Then I created a recursive function called isCircular that takes a cell label as a parameter.
-3. The isCircular function checks to see if the cell has been visited.
-4. If the cell has not been visited, it adds the cell to the visited set.
-5. Then it gets the dependencies for the cell.
+I used a depth-first-search algorithm to detect circular dependencies between cells. The following steps are used to detect circular dependencies between cells:
+1. First, I created a visited set to keep track of the cells that have been visited during the depth-first-search traversal.
+2. Then, I created a recursive function called isCircular that takes a cell label as a parameter.
+3. Within the isCircular function, I check if the cell has been visited.
+4. If not, I mark it as visited by adding it to the visited set.
+5. Then it gets the dependencies of the current cell.
 6. If the cell depends on the current cell, then it returns true.
 7. Otherwise, it recursively calls itself for each cell that the cell depends on.
-8. If any of the recursive calls return true, then it returns true.
-9. Otherwise, it returns false.
-10. If the cell has been visited, then it returns false.
+8. If any of the recursive calls return true, then it returns true. This indicates that there is a circular dependency for the current cell.
+9. Otherwise, it returns false. This indicates there is no circular depdency for the current cell.
+10. If the cell has been visited, then it returns false. This indicates that I have already checked for circular depdencies during the depth-first-search traversal.
 
 # Determining of Computation Order
 `updateComputationOrder()`
-The following steps are used to determine the computation order of cells. To get the computation order, I used a topological sort algorithm, following these steps:
-1. First, I created a visited array to keep track of the cells that have been visited.
-2. Then I created a recursive function called expandDependencies that takes a cell label as a parameter.
-3. The expandDependencies function checks to see if the cell has been visited.
-4. If the cell has not been visited, it adds the cell to the visited array.
-5. Then it gets the dependencies for the cell.
-6. Then it recursively calls itself for each cell that the cell depends on.
-7. Then it adds the cell to the computation order.
-8. If the cell has been visited, then it returns.
+To get the computation order, I used depth-first-search to traverse the dependecy graph and ensured that cells are added to the computation order in a topological order. The following steps are used to determine the computation order of cells:
+1. First, I created an empty array computationOrder to store the final order in which cells should be computed.
+2. Then, I create an empty set visited to keep track of the cells that I have visited during the DFS traversal.
+3. I create a mapping of cell labels to their respective nodes in the dependency graph.
+4. I implement a recursive function called expandDependencies, which takes a cell label as a parameter.
+5. In the expandDependencies function, I check if the cell has been visited. If it has, I return; otherwise, I add the cell to the visited set.
+6. I get the dependencies for the current cell using the cell's formula and extract cell references from it.
+7. I recursively call expandDependencies for each cell that the current cell depends on. This ensures that I traverse the graph in a depth-first manner.
+8. After processing all dependencies, I add the current cell to the front of the computationOrder array. This ensures that cells with fewer dependencies are computed first.
+9. I start DFS from each unvisited cell in the sheet, exploring the cells and their dependencies to build the computationOrder.
+10. The resulting computationOrder array represents a valid topological ordering of the cells, ensuring that cells are evaluated in the correct order while respecting their dependencies.
