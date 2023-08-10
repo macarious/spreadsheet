@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Formula from "./Formula";
 import Status from "./Status";
 import KeyPad from "./KeyPad";
@@ -6,6 +6,7 @@ import SpreadSheetController from "../Engine/SpreadSheetController";
 import SheetHolder from "./SheetHolder";
 
 import { ButtonNames } from "../Engine/GlobalDefinitions";
+import SpreadSheetClient from "../Engine/SpreadSheetClient";
 
 
 
@@ -28,7 +29,27 @@ function SpreadSheet() {
   const [statusString, setStatusString] = useState(spreadSheetController.getEditStatusString());
   const [currentCell, setCurrentCell] = useState(spreadSheetController.getWorkingCellLabel());
   const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetController.getEditStatus());
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error|null>(null);
 
+
+  useEffect(() => {
+    async function fetchDataAndInitController() {
+        try {
+            setLoading(true);
+            const serverData = await SpreadSheetClient.fetchData();
+            spreadSheetController.initFromServerData(serverData); 
+            updateDisplayValues();
+        } catch (err: any) {
+            console.error("Error fetching data:", err);
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    fetchDataAndInitController();
+}, []);
 
   function updateDisplayValues(): void {
     setFormulaString(spreadSheetController.getFormulaString());
@@ -123,6 +144,13 @@ function SpreadSheet() {
 
   }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   return (
     <div>
       <Formula formulaString={formulaString} resultString={resultString}  ></Formula>

@@ -28,6 +28,7 @@
 
 import Cell from "./Cell";
 
+
 export class SheetMemory {
     private _cells: Cell[][];
     private _numRows: number;
@@ -37,13 +38,15 @@ export class SheetMemory {
     private _currentColumn = 0;
 
 
-    constructor(columns: number, rows: number) {
-
+    constructor(columns: number, rows: number, serverData: { [label: string]: string[] } = {}) {
         this._numColumns = columns;
         this._numRows = rows;
-
         this._cells = [];
+        this.initEmptySheet();
+        this.initSheetFromServerData(serverData); 
+    }
 
+    initEmptySheet(): void {
         for (let row = 0; row < this._numRows; row++) {
             this._cells[row] = [];
             for (let column = 0; column < this._numColumns; column++) {
@@ -51,6 +54,15 @@ export class SheetMemory {
                 this._cells[row][column].setLabel(this.getLabelFromCoordinates(column, row));
             }
         }
+    }
+
+    initSheetFromServerData(serverData: { [label: string]: string[] }): void {
+        for (const label in serverData) {
+            const cell = this.getCellByLabel(label);
+            const formula = serverData[label];
+            cell.setFormula(formula); 
+        }
+        // evaluateAllCells should be called from spreadsheet controller
     }
 
     getNumRows(): number {
