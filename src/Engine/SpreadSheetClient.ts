@@ -32,7 +32,7 @@ export default class SpreadSheetClient {
         return await response.json();
     }
 
-    static async updateCell(cellLabel: string, formula: string[], userName: string): Promise<{ status: string }> {
+    static async updateCell(cellLabel: string, formula: string[], userName: string): Promise<{ status: string, version:string}> {
         const response = await fetch(baseURL + '/updateCell', {
             method: 'POST',
             headers: {
@@ -47,4 +47,30 @@ export default class SpreadSheetClient {
 
         return await response.json();
     }
+
+    static async unlockCell(cellLabel: string, userName: string): Promise<{ status: string }> {
+        const response = await fetch(baseURL + '/unlockCell', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ cellLabel, userName })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return await response.json();
+    }
+    static async getVersion(): Promise<{ version: string }> {
+        const response = await fetch(baseURL + '/getVersion');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return await response.json();
+    }
 }
+

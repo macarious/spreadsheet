@@ -56,11 +56,21 @@ export class SheetMemory {
         }
     }
 
+    static arraysHaveSameStrings(arr1: string[], arr2: string[]): boolean {
+        if (arr1.length !== arr2.length) return false;
+    
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) return false;
+        }
+    
+        return true;
+    }
+    
     initSheetFromServerData(serverData: { [label: string]: string[] }): void {
         for (const label in serverData) {
             const cell = this.getCellByLabel(label);
             const formula = serverData[label];
-            if (cell.getFormula()!== formula){
+            if (!SheetMemory.arraysHaveSameStrings(formula, cell.getFormula())){
                 cell.setFormula(formula); 
                 this._needsRecalc = true;
             }

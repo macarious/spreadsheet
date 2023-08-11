@@ -11,6 +11,12 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 
+
+let state = {
+    version: 0,
+  };
+  
+  
 const cellEditingStatus: { [key: string]: string } = {};
 const sheetState: { [key: string]: string[] } = {
     "A1": ["5"],
@@ -53,7 +59,12 @@ app.post('/updateCell', (req, res) => {
         return res.status(403).send({ error: "You don't have the lock on this cell." });
     }
     sheetState[cellLabel] = formula;
-    res.json({ status: 'updated', updatedCell: { [cellLabel]: formula } });
+    state.version += 1;
+    res.json({ status: 'updated', updatedCell: { [cellLabel]: formula }, version: state.version });
+});
+
+app.get('/getVersion', (req, res) => {
+    res.json({ version: state.version });
 });
 
 app.get('/cellStatus/:cellLabel', (req, res) => {
