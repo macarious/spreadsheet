@@ -37,7 +37,10 @@ export class FormulaBuilder {
    *  Set the formula
    */
   setFormula(formula: FormulaType): void {
-
+    if (formula === undefined){
+      this.formula = [];
+      return;
+    }
     this.formula = [...formula];
   }
 
