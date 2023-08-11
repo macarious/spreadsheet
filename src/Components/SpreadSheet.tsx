@@ -43,6 +43,8 @@ function SpreadSheet() {
   const [error, setError] = useState<Error | null>(null);
   const [clientVersion, setClientVersion] = useState(0);
 
+  // fetch data from server and initialize controller when the page is loaded
+  // the page does not display until the data is fetched
   useEffect(() => {
     async function fetchDataAndInitController() {
       try {
@@ -61,12 +63,13 @@ function SpreadSheet() {
     fetchDataAndInitController();
   }, []);
 
-
+  // check for updates from server every 333ms
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
         const serverVersion = await SpreadSheetClient.getVersion(); 
         const numberServerVersion = Number(serverVersion.version);
+        // check if server version is greater than client version
         if (numberServerVersion > clientVersion) {
           const serverData = await SpreadSheetClient.fetchData();
           spreadSheetController.initFromServerData(serverData);

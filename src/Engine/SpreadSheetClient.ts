@@ -1,6 +1,9 @@
 const hostname = window.location.hostname;
 const baseURL = `http://${hostname}:3005`;
 
+/**
+ * A helper class to communicate with the server. Build requests and parse responses.
+ */
 export default class SpreadSheetClient {
 
     static async fetchData(): Promise<{ [label: string]: string[] }> {

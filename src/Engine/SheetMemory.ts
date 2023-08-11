@@ -46,6 +46,9 @@ export class SheetMemory {
         this.initSheetFromServerData(serverData); 
     }
 
+    /**
+     * Create an empty sheet of cells before the server data is received
+     */
     initEmptySheet(): void {
         for (let row = 0; row < this._numRows; row++) {
             this._cells[row] = [];
@@ -55,7 +58,12 @@ export class SheetMemory {
             }
         }
     }
-
+    /**
+     * Helper method to compare two arrays of strings
+     * @param arr1 string array 1
+     * @param arr2 string array 2
+     * @returns if the arrays have the same strings
+     */
     static arraysHaveSameStrings(arr1: string[], arr2: string[]): boolean {
         if (arr1.length !== arr2.length) return false;
     
@@ -65,7 +73,12 @@ export class SheetMemory {
     
         return true;
     }
-    
+
+    /**
+     * update the storage of the local sheet memory. If there is a change in the formula then set needsRecalc 
+     * to true thus triggering a recalculation of the sheet
+     * @param serverData parsed json from the server
+     */
     initSheetFromServerData(serverData: { [label: string]: string[] }): void {
         for (const label in serverData) {
             const cell = this.getCellByLabel(label);
