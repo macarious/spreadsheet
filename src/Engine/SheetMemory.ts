@@ -36,7 +36,7 @@ export class SheetMemory {
 
     private _currentRow = 0;
     private _currentColumn = 0;
-
+    private _needsRecalc = false;
 
     constructor(columns: number, rows: number, serverData: { [label: string]: string[] } = {}) {
         this._numColumns = columns;
@@ -60,9 +60,19 @@ export class SheetMemory {
         for (const label in serverData) {
             const cell = this.getCellByLabel(label);
             const formula = serverData[label];
-            cell.setFormula(formula); 
+            if (cell.getFormula()!== formula){
+                cell.setFormula(formula); 
+                this._needsRecalc = true;
+            }
         }
         // evaluateAllCells should be called from spreadsheet controller
+    }
+
+    needsRecalc(): boolean {
+        return this._needsRecalc;
+    }
+    resetRecalc(): void {
+        this._needsRecalc = false;
     }
 
     getNumRows(): number {

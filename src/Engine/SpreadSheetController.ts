@@ -71,9 +71,17 @@ export class SpreadSheetController {
    * @param serverData data from the server
    */
   initFromServerData(serverData: { [label: string]: string[] }) {
+    if(this._cellIsBeingEdited){
+      serverData[this.getWorkingCellLabel()] = this._formulaBuilder.getFormula();
+    }else{
+      this._formulaBuilder.setFormula(serverData[this.getWorkingCellLabel()]);
+    }
     this._memory.initSheetFromServerData(serverData);
-    this._formulaBuilder.setFormula(this._memory.getCurrentCellFormula());
-    this._calculationManager.evaluateSheet(this._memory);
+    if (this._memory.needsRecalc()) {
+      this._calculationManager.updateComputationOrder(this._memory);
+      this._calculationManager.evaluateSheet(this._memory);
+      this._memory.resetRecalc();
+    }
   }
   /**  
    *  add token to current formula, this is not a cell and thus no dependency updating is needed
@@ -164,6 +172,9 @@ export class SpreadSheetController {
     return this._formulaBuilder.getFormulaString();
   }
 
+  getFormula(): string[] {
+    return this._formulaBuilder.getFormula();
+  }
   /** 
    * Get the formula as a value (formatted to a string)
    *  
