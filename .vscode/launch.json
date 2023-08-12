@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     {
       "type": "node",
       "request": "attach",
@@ -9,7 +10,7 @@
     },
     {
       "type": "node-terminal",
-      "name": "Start Calculator",
+      "name": "Start Spreadsheet",
       "request": "launch",
       "command": "npm run start",
       "cwd": "${workspaceFolder}"
@@ -25,7 +26,7 @@
       "type": "node-terminal",
       "name": "Start Data Server",
       "request": "launch",
-      "command": "npm run start-server",
+      "command": "npm run server",
       "cwd": "${workspaceFolder}"
     },
     {
@@ -70,5 +71,12 @@
       "command": "npx jest --coverage",
       "cwd": "${workspaceFolder}"
     },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome against localhost",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src"
+    }
   ]
 }

@@ -7,6 +7,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm run server`
+
+Start the backend server that provide the storage structure for spreadsheet. It listen on port 3005. It is recommended you start the server first.
+
 ### `npm start`
 
 Runs the app in the development mode.\

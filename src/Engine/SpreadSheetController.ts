@@ -27,6 +27,7 @@ import Cell from "./Cell";
  *
  */
 export class SpreadSheetController {
+
   /** The memory for the sheet */
   private _memory: SheetMemory;
 
@@ -65,8 +66,23 @@ export class SpreadSheetController {
     this._formulaBuilder = new FormulaBuilder();
     this._cellIsBeingEdited = false;
   }
-
-
+  /**
+   * pass the server data to the memory
+   * @param serverData data from the server
+   */
+  initFromServerData(serverData: { [label: string]: string[] }) {
+    if(this._cellIsBeingEdited){
+      serverData[this.getWorkingCellLabel()] = this._formulaBuilder.getFormula();
+    }else{
+      this._formulaBuilder.setFormula(serverData[this.getWorkingCellLabel()]);
+    }
+    this._memory.initSheetFromServerData(serverData);
+    if (this._memory.needsRecalc()) {
+      this._calculationManager.updateComputationOrder(this._memory);
+      this._calculationManager.evaluateSheet(this._memory);
+      this._memory.resetRecalc();
+    }
+  }
   /**  
    *  add token to current formula, this is not a cell and thus no dependency updating is needed
    * 
@@ -77,8 +93,6 @@ export class SpreadSheetController {
    * 
    */
   addToken(token: string): void {
-
-
     // add the token to the formula
     this._formulaBuilder.addToken(token);
     // update the memory with the new formula
@@ -158,6 +172,9 @@ export class SpreadSheetController {
     return this._formulaBuilder.getFormulaString();
   }
 
+  getFormula(): string[] {
+    return this._formulaBuilder.getFormula();
+  }
   /** 
    * Get the formula as a value (formatted to a string)
    *  

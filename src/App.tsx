@@ -11,7 +11,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Home />
+        <input type="text" id="username" placeholder="username" />
+        <SpreadSheet />
       </header>
 
     </div>

@@ -28,6 +28,7 @@
 
 import Cell from "./Cell";
 
+
 export class SheetMemory {
     private _cells: Cell[][];
     private _numRows: number;
@@ -35,15 +36,20 @@ export class SheetMemory {
 
     private _currentRow = 0;
     private _currentColumn = 0;
+    private _needsRecalc = false;
 
-
-    constructor(columns: number, rows: number) {
-
+    constructor(columns: number, rows: number, serverData: { [label: string]: string[] } = {}) {
         this._numColumns = columns;
         this._numRows = rows;
-
         this._cells = [];
+        this.initEmptySheet();
+        this.initSheetFromServerData(serverData); 
+    }
 
+    /**
+     * Create an empty sheet of cells before the server data is received
+     */
+    initEmptySheet(): void {
         for (let row = 0; row < this._numRows; row++) {
             this._cells[row] = [];
             for (let column = 0; column < this._numColumns; column++) {
@@ -51,6 +57,45 @@ export class SheetMemory {
                 this._cells[row][column].setLabel(this.getLabelFromCoordinates(column, row));
             }
         }
+    }
+    /**
+     * Helper method to compare two arrays of strings
+     * @param arr1 string array 1
+     * @param arr2 string array 2
+     * @returns if the arrays have the same strings
+     */
+    static arraysHaveSameStrings(arr1: string[], arr2: string[]): boolean {
+        if (arr1.length !== arr2.length) return false;
+    
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) return false;
+        }
+    
+        return true;
+    }
+
+    /**
+     * update the storage of the local sheet memory. If there is a change in the formula then set needsRecalc 
+     * to true thus triggering a recalculation of the sheet
+     * @param serverData parsed json from the server
+     */
+    initSheetFromServerData(serverData: { [label: string]: string[] }): void {
+        for (const label in serverData) {
+            const cell = this.getCellByLabel(label);
+            const formula = serverData[label];
+            if (!SheetMemory.arraysHaveSameStrings(formula, cell.getFormula())){
+                cell.setFormula(formula); 
+                this._needsRecalc = true;
+            }
+        }
+        // evaluateAllCells should be called from spreadsheet controller
+    }
+
+    needsRecalc(): boolean {
+        return this._needsRecalc;
+    }
+    resetRecalc(): void {
+        this._needsRecalc = false;
     }
 
     getNumRows(): number {
