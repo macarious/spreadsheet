@@ -181,10 +181,52 @@ export class FormulaEvaluator {
       } else if (operator === "x^(1/3)") {
         result = Math.cbrt(result);
       } else if(operator === "sin") {
-        result = Math.sin(result);
+          result = result % 360;
+          result = result * (Math.PI / 180);
+          if(result == 0){
+            result = 0;
+          } else if(result == 90){
+            result = 1;
+          } else if(result == 180){
+            result = 0;
+          } else if(result == 270){
+            result = -1;
+          } else{
+            result = Math.sin(result);
+          }
       } else if(operator === "cos") {
-        result = Math.cos(result);
+        result = result % 360;
+        result = result * (Math.PI / 180);
+        if(result == 0){
+          result = 1;
+        } else if(result == 90){
+          result = 0;
+        } else if(result == 180){
+          result = -1;
+        } else if(result == 270){
+          result = 0;
+        }
+        else{
+          result = Math.cos(result);
+        }
       } else if(operator === "tan") {
+        result = result % 360;
+        result = result * (Math.PI / 180);
+        if(result == 0){
+          result = 0;
+        } else if(result == 90){
+          this._errorOccured = true;
+          this._errorMessage = ErrorMessages.tan90;
+          this._lastResult = NaN;
+          return NaN;
+        } else if(result == 180){
+          result = 0;
+        } else if(result == 270){
+          this._errorOccured = true;
+          this._errorMessage = ErrorMessages.tan90;
+          this._lastResult = NaN;
+          return NaN;
+        }
         result = Math.tan(result);
       } else if(operator === "sin^-1") {
         result = Math.asin(result);
