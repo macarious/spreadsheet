@@ -187,6 +187,93 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
         />
       </div>
 
+      <div className="buttons-row">
+        <Button
+          text="x^2"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="square-button"
+        />
+        <Button
+          text="x^3"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="cube-button"
+        />
+        <Button
+          text="1/x"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="reciprocal-button"
+        />
+        <Button
+          text="x^(1/2)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="squareRoot-button"
+        />
+        <Button
+          text="x^(1/3)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="cubeRoot-button"
+        />
+        <Button
+          text="sin"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="sin-button"
+        />
+        <Button
+          text="cos"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="cos-button"
+        />
+        <Button
+          text="tan"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="tan-button"
+        />
+        <Button
+          text="sin^(-1)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="asin-button"
+        />
+        <Button
+          text="cos(-1)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="acos-button"
+        />
+        <Button
+          text="tan(-1)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="atan-button"
+        />
+          <Button
+          text="Rand"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="random-button"
+        />     
+      </div>
+
     </div>
   );
 } // KeyPad

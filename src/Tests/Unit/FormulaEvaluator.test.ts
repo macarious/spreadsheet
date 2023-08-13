@@ -291,6 +291,98 @@ describe("FormulaEvaluator", () => {
       });
     });
 
+    describe("when the formula contains square", () => {
+      it("returns the result of the square of the first number", () => {
+        const formula: FormulaType = ["1", "x^2"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(1);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains square", () => {
+      it("returns the result of the square of the first number", () => {
+        const formula: FormulaType = ["5", "x^2"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(25);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains square", () => {
+      it("returns the result of the square of the first number", () => {
+        const formula: FormulaType = ["0", "x^2"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(0);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains cube", () => {
+      it("returns the result of the cube of the first number", () => {
+        const formula: FormulaType = ["0", "x^3"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(0);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+
+    describe("when the formula contains cube", () => {
+      it("returns the result of the cube of the first number", () => {
+        const formula: FormulaType = ["3", "x^3"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(27);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+
+    describe("when the formula contains cube", () => {
+      it("returns the result of the cube of the first number", () => {
+        const formula: FormulaType = ["4", "x^3"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(64);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
     describe("when the formula A1 + A2 + 50", () => {
 
       it("returns the number", () => {

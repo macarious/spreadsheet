@@ -36,6 +36,13 @@ export class FormulaEvaluator {
    * formula = expression
    * expression = term { ("+" | "-") term }
    * term = factor { ("*" | "/") factor }
+   * 
+   * there will be extra functions added to the project that will add more operators
+   * newTerm = factor {"x^2" | "x^3" | "1/x" | "x^(1/2)" | "x^(1/3)}
+   * newTriFunctions = factor {"sin" | "cos" | "tan" | "sin^-1" | "cos^-1" | "tan^-1"}
+   * newFunctions = factor {"Rand"}
+   * newSigns = term {"+/-"}
+   * 
    * factor = number | "(" expression ")" | cellReference
    * cellReference = a string of letters followed by a string of digits
    * 
@@ -134,12 +141,12 @@ export class FormulaEvaluator {
       return this._lastResult;
     }
     let result = this.factor();
-    while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/")) {
+    while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/" || this._currentFormula[0] === "x^2" || this._currentFormula[0] === "x^3" || this._currentFormula[0] === "1/x" || this._currentFormula[0] === "x^(1/2)" || this._currentFormula[0] === "x^(1/3)" || this._currentFormula[0] === "sin" || this._currentFormula[0] === "cos" || this._currentFormula[0] === "tan" || this._currentFormula[0] === "sin^-1" || this._currentFormula[0] === "cos^-1" || this._currentFormula[0] === "tan^-1")) {
       let operator = this._currentFormula.shift();
       let factor = this.factor();
       if (operator === "*") {
         result *= factor;
-      } else {
+      } else if (operator === "/") {
         // check for divide by zero
         if (factor === 0) {
           this._errorOccured = true;
@@ -149,7 +156,29 @@ export class FormulaEvaluator {
         }
         // we are ok, lets divide
         result /= factor;
-      }
+      } else if (operator === "x^2") {
+        result = Math.pow(result, 2);
+      } else if(operator === "x^3") {
+        result = Math.pow(result, 3);
+      } else if (operator === "1/x") {
+        result = 1 / result;
+      } else if(operator === "x^(1/2)") {
+        result = Math.sqrt(result);
+      } else if (operator === "x^(1/3)") {
+        result = Math.cbrt(result);
+      } else if(operator === "sin") {
+        result = Math.sin(result);
+      } else if(operator === "cos") {
+        result = Math.cos(result);
+      } else if(operator === "tan") {
+        result = Math.tan(result);
+      } else if(operator === "sin^-1") {
+        result = Math.asin(result);
+      } else if(operator === "cos^-1") {
+        result = Math.acos(result);
+      } else if(operator === "tan^-1") {
+        result = Math.atan(result);
+      } 
     }
     // set the lastResult to the result
     this._lastResult = result;
