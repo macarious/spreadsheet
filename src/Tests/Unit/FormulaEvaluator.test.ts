@@ -383,6 +383,115 @@ describe("FormulaEvaluator", () => {
     }
     );
 
+    describe("when the formula contains reciprocol", () => {
+      it("returns the result of the reciprocol of the first number", () => {
+        const formula: FormulaType = ["1", "1/x"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(1);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains reciprocol", () => {
+      it("returns the result of the reciprocol of the first number", () => {
+        const formula: FormulaType = ["5", "1/x"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(1/5);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains reciprocol", () => {
+      it("returns the result of the reciprocol of the first number", () => {
+        const formula: FormulaType = ["0.2", "1/x"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(5);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains reciprocol", () => {
+      it("returns the result of the reciprocol of the first number", () => {
+        const formula: FormulaType = ["0.025", "1/x"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(40);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains square root", () => {
+      it("returns the result of the square root of the first number", () => {
+        const formula: FormulaType = ["4", "x^(1/2)"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(2);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+
+    describe("when the formula contains square root", () => {
+      it("returns the result of the square root of the first number", () => {
+        const formula: FormulaType = ["16", "x^(1/2)"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(4);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+
+    describe("when the formula contains square root", () => {
+      it("returns the result of the square root of the first number", () => {
+        const formula: FormulaType = ["25", "x^(1/2)"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(5);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    
+
     describe("when the formula A1 + A2 + 50", () => {
 
       it("returns the number", () => {

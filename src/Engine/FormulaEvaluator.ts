@@ -161,9 +161,23 @@ export class FormulaEvaluator {
       } else if(operator === "x^3") {
         result = Math.pow(result, 3);
       } else if (operator === "1/x") {
-        result = 1 / result;
+        if(result == 0){
+          this._errorOccured = true;
+          this._errorMessage = ErrorMessages.divideByZero;
+          this._lastResult = Infinity;
+          return Infinity;
+        } else{
+          result = 1 / result;
+        }
       } else if(operator === "x^(1/2)") {
-        result = Math.sqrt(result);
+        if(result < 0){
+          this._errorOccured = true;
+          this._errorMessage = ErrorMessages.negativeRoot;
+          this._lastResult = NaN;
+          return NaN;
+        } else{
+          result = Math.sqrt(result);
+        }
       } else if (operator === "x^(1/3)") {
         result = Math.cbrt(result);
       } else if(operator === "sin") {
