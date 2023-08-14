@@ -16,11 +16,10 @@ const spreadsheets: { [key: string]: Spreadsheet } = {}; // Dictionary to store 
 
 app.post("/createSpreadsheet/:documentName", (req, res) => {
   const { documentName } = req.params;
-  if (spreadsheets[documentName]) {
-    return res.status(400).json({ error: "Document already exists" });
+  if (!spreadsheets[documentName]) {
+    spreadsheets[documentName] = new Spreadsheet();
   }
-  spreadsheets[documentName] = new Spreadsheet();
-  return res.json({ message: "Document created" });
+  return res.json({ message: "Document created or loaded" });
 });
 
 app.get("/documents/:documentName/sheetState", (req, res) => {

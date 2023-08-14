@@ -20,7 +20,13 @@ let spreadSheetController: SpreadSheetController = new SpreadSheetController(
   8
 );
 
-function SpreadSheet() {
+interface SpreadSheetProps {
+  documentName: string;
+}
+
+
+function SpreadSheet({ documentName }: SpreadSheetProps) {
+
   const [formulaString, setFormulaString] = useState(
     spreadSheetController.getFormulaString()
   );
@@ -49,9 +55,10 @@ function SpreadSheet() {
     async function fetchDataAndInitController() {
       try {
         setLoading(true);
-        const serverData = await SpreadSheetClient.fetchData();
+        const serverData = await SpreadSheetClient.fetchData(documentName);
+        spreadSheetController = new SpreadSheetController(5, 8);
         spreadSheetController.initFromServerData(serverData);
-        updateDisplayValues();
+        updateDisplayValues(spreadSheetController);
       } catch (err: any) {
         console.error("Error fetching data:", err);
         setError(err);
@@ -59,40 +66,45 @@ function SpreadSheet() {
         setLoading(false);
       }
     }
+  
+    if (documentName) {
+      console.log(documentName)
+      fetchDataAndInitController();
+    }
+  }, [documentName]);
 
-    fetchDataAndInitController();
-  }, []);
 
   // check for updates from server every 333ms
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const serverVersion = await SpreadSheetClient.getVersion(); 
-        const numberServerVersion = Number(serverVersion.version);
-        // check if server version is greater than client version
-        if (numberServerVersion > clientVersion) {
-          const serverData = await SpreadSheetClient.fetchData();
-          spreadSheetController.initFromServerData(serverData);
-          updateDisplayValues();
-          setClientVersion(numberServerVersion);
+        if (spreadSheetController) {
+          const serverVersion = await SpreadSheetClient.getVersion(
+            documentName
+          );
+          const numberServerVersion = Number(serverVersion.version);
+          if (numberServerVersion > clientVersion) {
+            const serverData = await SpreadSheetClient.fetchData(documentName);
+            spreadSheetController.initFromServerData(serverData);
+            updateDisplayValues(spreadSheetController);
+            setClientVersion(numberServerVersion);
+          }
         }
       } catch (error) {
         console.error("Error fetching version/data:", error);
       }
     }, 333);
-    
+
     // Cleanup interval when component is unmounted
     return () => clearInterval(interval);
-}, [clientVersion]);
-
-
+  }, [clientVersion]);
 
   async function lockCell(
     cellLabel: string,
     userName: string
   ): Promise<string> {
     try {
-      const response = await SpreadSheetClient.lockCell(cellLabel, userName);
+      const response = await SpreadSheetClient.lockCell(documentName, cellLabel, userName);
       if (response.status === "locked") {
         return "locked";
       } else {
@@ -110,7 +122,7 @@ function SpreadSheet() {
     userName: string
   ): Promise<string> {
     try {
-      const response = await SpreadSheetClient.unlockCell(cellLabel, userName);
+      const response = await SpreadSheetClient.unlockCell(documentName, cellLabel, userName);
       if (response.status === "unlocked") {
         return "unlocked";
       } else {
@@ -128,11 +140,7 @@ function SpreadSheet() {
     userName: string
   ): Promise<string> {
     try {
-      const response = await SpreadSheetClient.updateCell(
-        cellLabel,
-        formula,
-        userName
-      );
+      const response = await SpreadSheetClient.updateCell(documentName, cellLabel, formula, userName);
       if (response.status === "updated") {
         setClientVersion(+response.version);
         return "updated";
@@ -145,27 +153,15 @@ function SpreadSheet() {
     }
   }
 
-  function updateDisplayValues(): void {
-    setFormulaString(spreadSheetController.getFormulaString());
-    setResultString(spreadSheetController.getResultString());
-    setStatusString(spreadSheetController.getEditStatusString());
-    setCells(spreadSheetController.getSheetDisplayStringsForGUI());
-    setCurrentCell(spreadSheetController.getWorkingCellLabel());
-    setCurrentlyEditing(spreadSheetController.getEditStatus());
+  function updateDisplayValues(controller: SpreadSheetController): void {
+    setFormulaString(controller.getFormulaString());
+    setResultString(controller.getResultString());
+    setStatusString(controller.getEditStatusString());
+    setCells(controller.getSheetDisplayStringsForGUI());
+    setCurrentCell(controller.getWorkingCellLabel());
+    setCurrentlyEditing(controller.getEditStatus());
   }
 
-  /**
-   *
-   * @param event
-   *
-   * This function is the call back for the command buttons
-   *
-   * It will call the machine to process the command button
-   *
-   * the buttons done, edit, clear, all clear, and restart do not require asynchronous processing
-   *
-   * the other buttons do require asynchronous processing and so the function is marked async
-   */
   async function onCommandButtonClick(text: string): Promise<void> {
     const username = (document.getElementById("username") as HTMLInputElement)
       .value;
@@ -217,17 +213,9 @@ function SpreadSheet() {
       default:
         break;
     }
-    updateDisplayValues();
+    updateDisplayValues(spreadSheetController);
   }
 
-  /**
-   *  This function is the call back for the number buttons and the Parenthesis buttons
-   *
-   * They all automatically start the editing of the current formula.
-   *
-   * @param event
-   *
-   * */
   async function onButtonClick(
     event: React.MouseEvent<HTMLButtonElement>
   ): Promise<void> {
@@ -242,15 +230,14 @@ function SpreadSheet() {
     let trueText = text ? text : "";
 
     try {
-      const response = await SpreadSheetClient.lockCell(cellLabel, username);
+      const response = await SpreadSheetClient.lockCell(documentName, cellLabel, username);
       if (response.status === "locked") {
         spreadSheetController.setEditStatus(true);
         spreadSheetController.addToken(trueText);
         const cellData = spreadSheetController.getFormula();
-        await SpreadSheetClient.updateCell(cellLabel, cellData, username);
-        updateDisplayValues();
+        await SpreadSheetClient.updateCell(documentName, cellLabel, cellData, username);
+        updateDisplayValues(spreadSheetController);
       } else {
-        // Handle the scenario where another user has locked the cell
         alert(`Cell is already being edited by ${response.editingBy}`);
       }
     } catch (error) {
@@ -276,7 +263,6 @@ function SpreadSheet() {
 
     let realCellLabel = cellLabel ? cellLabel : "";
 
-    // If the edit status is true, try to lock and then update the cell with the server
     if (editStatus) {
       if (username === "") {
         alert("Please enter a username");
@@ -290,12 +276,10 @@ function SpreadSheet() {
           username
         );
       }
-      updateDisplayValues();
-    }
-    // If the edit status is false then set the current cell to the clicked on cell
-    else {
+      updateDisplayValues(spreadSheetController);
+    } else {
       spreadSheetController.setWorkingCellByLabel(realCellLabel);
-      updateDisplayValues();
+      updateDisplayValues(spreadSheetController);
     }
   }
 
