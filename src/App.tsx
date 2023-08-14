@@ -26,6 +26,7 @@ export default function App() {
     if (documentName) {
       try {
         await SpreadSheetClient.createDocument(documentName);
+        window.location.href = `/${documentName}`; // Manually navigate to the new document's route
         setDocumentName("");
         setDocumentNames((prevNames) => [...prevNames, documentName]); // Update document names with the new name
       } catch (error) {
