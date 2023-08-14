@@ -579,10 +579,73 @@ describe("FormulaEvaluator", () => {
     }
     );
 
-   
 
-   
-    
+    describe("when the formula contains cos", () => {
+      it("returns the result of the cos of the first angle", () => {
+        const formula: FormulaType = ["0", "cos"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(1);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      }
+      );
+    }
+    );
+
+    describe("when the formula contains tan", () => {
+      it("returns the result of the tan of the first angle", () => {
+        const formula: FormulaType = ["0", "tan"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(0);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      });
+    });
+
+    describe("when the formula contains sin^(-1)", () => {
+      it("returns the result of the sin^(-1) of the first angle", () => {
+        const formula: FormulaType = ["0", "sin^(-1)"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(0);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      });
+    });
+
+    describe("when the formula contains +/-", () => {
+      it("returns the result of the negative of the result", () => {
+        const formula: FormulaType = ["3", "+/-"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(-3);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      });
+    });
+
+    describe("when the formula contains +/-", () => {
+      it("returns the result of the negative of the result", () => {
+        const formula: FormulaType = ["15", "+/-"];
+        recalc.evaluate(formula);
+
+        let result = recalc.result;
+        let error = recalc.error;
+
+        expect(result).toEqual(-15);
+        expect(error).toEqual(ErrorMessages.invalidFormula);
+      });
+    });
 
     describe("when the formula A1 + A2 + 50", () => {
 

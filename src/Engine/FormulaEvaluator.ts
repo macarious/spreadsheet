@@ -141,7 +141,7 @@ export class FormulaEvaluator {
       return this._lastResult;
     }
     let result = this.factor();
-    while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/" || this._currentFormula[0] === "x^2" || this._currentFormula[0] === "x^3" || this._currentFormula[0] === "1/x" || this._currentFormula[0] === "x^(1/2)" || this._currentFormula[0] === "x^(1/3)" || this._currentFormula[0] === "sin" || this._currentFormula[0] === "cos" || this._currentFormula[0] === "tan" || this._currentFormula[0] === "sin^-1" || this._currentFormula[0] === "cos^-1" || this._currentFormula[0] === "tan^-1")) {
+    while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/" || this._currentFormula[0] === "x^2" || this._currentFormula[0] === "x^3" || this._currentFormula[0] === "1/x" || this._currentFormula[0] === "x^(1/2)" || this._currentFormula[0] === "x^(1/3)" || this._currentFormula[0] === "sin" || this._currentFormula[0] === "cos" || this._currentFormula[0] === "tan" || this._currentFormula[0] === "sin^-1" || this._currentFormula[0] === "cos^-1" || this._currentFormula[0] === "tan^-1" || this._currentFormula[0] === "Rand" || this._currentFormula[0] === "+/-")) {
       let operator = this._currentFormula.shift();
       let factor = this.factor();
       if (operator === "*") {
@@ -161,7 +161,7 @@ export class FormulaEvaluator {
       } else if(operator === "x^3") {
         result = Math.pow(result, 3);
       } else if (operator === "1/x") {
-        if(result == 0){
+        if(result === 0){
           this._errorOccured = true;
           this._errorMessage = ErrorMessages.divideByZero;
           this._lastResult = Infinity;
@@ -183,13 +183,13 @@ export class FormulaEvaluator {
       } else if(operator === "sin") {
           result = result % 360;
           result = result * (Math.PI / 180);
-          if(result == 0){
+          if(result === 0){
             result = 0;
-          } else if(result == 90){
+          } else if(result === 90){
             result = 1;
-          } else if(result == 180){
+          } else if(result === 180){
             result = 0;
-          } else if(result == 270){
+          } else if(result === 270){
             result = -1;
           } else{
             result = Math.sin(result);
@@ -197,13 +197,13 @@ export class FormulaEvaluator {
       } else if(operator === "cos") {
         result = result % 360;
         result = result * (Math.PI / 180);
-        if(result == 0){
+        if(result === 0){
           result = 1;
-        } else if(result == 90){
+        } else if(result === 90){
           result = 0;
-        } else if(result == 180){
+        } else if(result === 180){
           result = -1;
-        } else if(result == 270){
+        } else if(result === 270){
           result = 0;
         }
         else{
@@ -212,16 +212,16 @@ export class FormulaEvaluator {
       } else if(operator === "tan") {
         result = result % 360;
         result = result * (Math.PI / 180);
-        if(result == 0){
+        if(result === 0){
           result = 0;
-        } else if(result == 90){
+        } else if(result === 90){
           this._errorOccured = true;
           this._errorMessage = ErrorMessages.tan90;
           this._lastResult = NaN;
           return NaN;
-        } else if(result == 180){
+        } else if(result === 180){
           result = 0;
-        } else if(result == 270){
+        } else if(result === 270){
           this._errorOccured = true;
           this._errorMessage = ErrorMessages.tan90;
           this._lastResult = NaN;
@@ -229,12 +229,37 @@ export class FormulaEvaluator {
         }
         result = Math.tan(result);
       } else if(operator === "sin^-1") {
-        result = Math.asin(result);
+        if(result < -1 || result > 1){
+          this._errorOccured = true;
+          this._errorMessage = ErrorMessages.invalidInput;
+          this._lastResult = NaN;
+          return NaN;
+        } else if(result === 0){
+          result = 0;
+        } else if(result === 1){
+          result = 90;
+        } else if(result === -1){
+          result = -90;
+        } else {
+          result = Math.asin(result);
+        }
       } else if(operator === "cos^-1") {
-        result = Math.acos(result);
+        if(result < -1 || result > 1){
+          this._errorOccured = true;
+          this._errorMessage = ErrorMessages.invalidInput;
+          this._lastResult = NaN;
+          return NaN;
+        }else{
+          result = Math.acos(result);
+        }
       } else if(operator === "tan^-1") {
-        result = Math.atan(result);
-      } 
+          result = Math.atan(result);
+        } else if(operator === "Rand") {
+          result = Math.random();
+        }
+      else if(operator === "+/-") {
+        result = result * -1;
+      }
     }
     // set the lastResult to the result
     this._lastResult = result;
