@@ -4,8 +4,7 @@ import { ButtonNames } from "../Engine/GlobalDefinitions";
 
 import Button from "./Button";
 
-import "./KeyPad.css";
-import "./Button.css";
+import "../styles/KeyPad.css";
 
 interface KeyPadProps {
   onButtonClick: (event: React.MouseEvent<HTMLButtonElement>) => void;

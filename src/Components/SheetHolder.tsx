@@ -1,7 +1,7 @@
 import React from "react";
 
 import SheetComponent from "./SheetComponent";
-import "./SheetHolder.css";
+import "../styles/SheetHolder.css"
 
 // a wrapper for the sheet component that allows the sheet to be scrolled
 // the sheet is a grid of cells
