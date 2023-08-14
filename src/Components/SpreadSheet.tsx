@@ -4,9 +4,10 @@ import Status from "./Status";
 import KeyPad from "./KeyPad";
 import SpreadSheetController from "../Engine/SpreadSheetController";
 import SheetHolder from "./SheetHolder";
-
+import Card from "react-bootstrap/Card";
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import SpreadSheetClient from "../Engine/SpreadSheetClient";
+import "../styles/spreadsheet.css";
 
 /**
  * the main component for the Spreadsheet.  It is the parent of all the other components
@@ -24,9 +25,7 @@ interface SpreadSheetProps {
   documentName: string;
 }
 
-
 function SpreadSheet({ documentName }: SpreadSheetProps) {
-
   const [formulaString, setFormulaString] = useState(
     spreadSheetController.getFormulaString()
   );
@@ -63,17 +62,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         console.error("Error fetching data:", err);
         setError(err);
       } finally {
-        console.log('set loading to false')
+        console.log("set loading to false");
         setLoading(false);
       }
     }
-  
+
     if (documentName) {
-      console.log(documentName)
+      console.log(documentName);
       fetchDataAndInitController();
     }
   }, [documentName]);
-
 
   // check for updates from server every 333ms
   useEffect(() => {
@@ -105,7 +103,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     userName: string
   ): Promise<string> {
     try {
-      const response = await SpreadSheetClient.lockCell(documentName, cellLabel, userName);
+      const response = await SpreadSheetClient.lockCell(
+        documentName,
+        cellLabel,
+        userName
+      );
       if (response.status === "locked") {
         return "locked";
       } else {
@@ -123,7 +125,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     userName: string
   ): Promise<string> {
     try {
-      const response = await SpreadSheetClient.unlockCell(documentName, cellLabel, userName);
+      const response = await SpreadSheetClient.unlockCell(
+        documentName,
+        cellLabel,
+        userName
+      );
       if (response.status === "unlocked") {
         return "unlocked";
       } else {
@@ -141,7 +147,12 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     userName: string
   ): Promise<string> {
     try {
-      const response = await SpreadSheetClient.updateCell(documentName, cellLabel, formula, userName);
+      const response = await SpreadSheetClient.updateCell(
+        documentName,
+        cellLabel,
+        formula,
+        userName
+      );
       if (response.status === "updated") {
         setClientVersion(+response.version);
         return "updated";
@@ -231,12 +242,21 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     let trueText = text ? text : "";
 
     try {
-      const response = await SpreadSheetClient.lockCell(documentName, cellLabel, username);
+      const response = await SpreadSheetClient.lockCell(
+        documentName,
+        cellLabel,
+        username
+      );
       if (response.status === "locked") {
         spreadSheetController.setEditStatus(true);
         spreadSheetController.addToken(trueText);
         const cellData = spreadSheetController.getFormula();
-        await SpreadSheetClient.updateCell(documentName, cellLabel, cellData, username);
+        await SpreadSheetClient.updateCell(
+          documentName,
+          cellLabel,
+          cellData,
+          username
+        );
         updateDisplayValues(spreadSheetController);
       } else {
         alert(`Cell is already being edited by ${response.editingBy}`);
@@ -269,7 +289,12 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         alert("Please enter a username");
         return;
       }
-      if ((await lockCell(spreadSheetController.getWorkingCellLabel(), username)) === "locked") {
+      if (
+        (await lockCell(
+          spreadSheetController.getWorkingCellLabel(),
+          username
+        )) === "locked"
+      ) {
         spreadSheetController.addCell(realCellLabel);
         await updateCell(
           spreadSheetController.getWorkingCellLabel(),
@@ -292,26 +317,30 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div>
-      <h1>Document Name: {documentName}</h1>
+    <div className="spreadsheet-container">
+      <Card className="sheet-card">
+        <h1>Document Name: {documentName}</h1>
+        <Status statusString={statusString}></Status>
+        {
+          <SheetHolder
+            cellsValues={cells}
+            onClick={onCellClick}
+            currentCell={currentCell}
+            currentlyEditing={currentlyEditing}
+          ></SheetHolder>
+        }
+      </Card>
+      <Card className="formula-keypad-card">
       <Formula
-        formulaString={formulaString}
-        resultString={resultString}
-      ></Formula>
-      <Status statusString={statusString}></Status>
-      {
-        <SheetHolder
-          cellsValues={cells}
-          onClick={onCellClick}
-          currentCell={currentCell}
+          formulaString={formulaString}
+          resultString={resultString}
+        ></Formula>
+        <KeyPad
+          onButtonClick={onButtonClick}
+          onCommandButtonClick={onCommandButtonClick}
           currentlyEditing={currentlyEditing}
-        ></SheetHolder>
-      }
-      <KeyPad
-        onButtonClick={onButtonClick}
-        onCommandButtonClick={onCommandButtonClick}
-        currentlyEditing={currentlyEditing}
-      ></KeyPad>
+        ></KeyPad>
+      </Card>
     </div>
   );
 }

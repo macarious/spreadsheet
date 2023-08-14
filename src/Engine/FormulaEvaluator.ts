@@ -265,7 +265,11 @@ export class FormulaEvaluator {
           result = Math.random();
         }
       else if(operator === "+/-") {
+        if(result === 0){
+          result = 0;
+        } else{
         result = result * -1;
+        }
       }
     }
     // set the lastResult to the result
