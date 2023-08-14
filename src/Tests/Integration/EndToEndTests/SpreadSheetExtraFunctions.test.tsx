@@ -26,7 +26,7 @@ describe("SpreadSheet test x^2", () => {
     it("bbb", () => {
     // it("selects A1 enters 25 then presses done then selects A1 clicks on edit then clicks on x^2 and sees 625", () => {
         const { getByText, getByTestId } = render(
-            <SpreadSheet />
+            <SpreadSheet documentName=""/>
         );
         const statusComponent = getByTestId("StatusComponent");
         const formulaValue = getByTestId("FormulaValue");
