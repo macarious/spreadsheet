@@ -46,6 +46,9 @@ export class FormulaEvaluator {
    * factor = number | "(" expression ")" | cellReference
    * cellReference = a string of letters followed by a string of digits
    * 
+   * adding extra functions for the calculator
+   * term = factor { ("*" | "/" | "x^2" | "x^3" | "1/x" | "x^(1/2)" | "x ^(1/3)" | "sin" | "cos" | "tan" | "sin^(-1)" | "cos^(-1)" | "tan^(-1)" | "Rand" | "+/-") factor }
+   * 
    * The value of a number is the number
    * The value of a cellReference is the value of the cell
    * The value of an expression is the value of the first term plus or minus the value of the second term
