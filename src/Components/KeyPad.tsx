@@ -290,21 +290,6 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           className="button-operator"
           dataTestId="atan-button"
         />
-          <Button
-          text="Rand"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="random-button"
-        />     
-
-<Button
-          text="+/-"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="negative-button"
-        />     
       </div>
 
     </div>
