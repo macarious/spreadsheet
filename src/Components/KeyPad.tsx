@@ -1,7 +1,6 @@
 import React from "react";
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 
-
 import Button from "./Button";
 
 import "../styles/KeyPad.css";
@@ -12,8 +11,11 @@ interface KeyPadProps {
   currentlyEditing: boolean;
 } // interface KeyPadProps
 
-function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPadProps) {
-
+function KeyPad({
+  onButtonClick,
+  onCommandButtonClick,
+  currentlyEditing,
+}: KeyPadProps) {
   // the done button has two styles and two text values depending on currently Editing
   // if currentlyEditing is true then the button will have the class button-edit-end
   // and the text will be "="
@@ -33,7 +35,6 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
   return (
     <div className="buttons">
       <div className="buttons-row">
-
         <Button
           text="7"
           isDigit={true}
@@ -145,7 +146,6 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           className="button-operator"
           dataTestId="subtract-button"
         />
-
       </div>
 
       <div className="buttons-row">
@@ -181,35 +181,41 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           text={doneButtonText}
           isDigit={true}
           onClick={() => onCommandButtonClick(ButtonNames.edit_toggle)}
-          className={(getDoneButtonClass())}
+          className={getDoneButtonClass()}
           dataTestId="edit-toggle-button"
         />
       </div>
 
       <div className="buttons-row">
         <Button
-          text="x^2"
+          text={<span>x²</span>}
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="square-button"
         />
         <Button
-          text="x^3"
+          text={<span>x³</span>}
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="cube-button"
         />
         <Button
-          text="1/x"
+          text={
+            <span className="fraction">
+              <span className="numerator">1</span>
+              <span className="fraction-line"></span>
+              <span className="denominator">x</span>
+            </span>
+          }
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="reciprocol-button"
         />
         <Button
-          text="Rand"
+          text="rand"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
@@ -224,25 +230,26 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
         />
       </div>
 
-
       <div className="buttons-row">
         <Button
-          text="x^(1/2)"
+          text={
+            <span>
+              √<span className="square-root-x">x</span>
+            </span>
+          }
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="squareRoot-button"
         />
         <Button
-          text="x^(1/3)"
+          text={<span>&#8731;x</span>}
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="cubeRoot-button"
         />
-      </div>
 
-      <div className="buttons-row">
         <Button
           text="sin"
           isDigit={true}
@@ -268,30 +275,28 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
 
       <div className="buttons-row">
         <Button
-          text="sin^(-1)"
+          text={<span>sin⁻¹x</span>}
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="asin-button"
         />
         <Button
-          text="cos^(-1)"
+          text={<span>cos⁻¹x</span>}
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="acos-button"
         />
-      </div>
-      <div className="buttons-row">
+
         <Button
-          text="tan^(-1)"
+          text={<span>tan⁻¹x</span>}
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="atan-button"
         />
       </div>
-
     </div>
   );
 } // KeyPad

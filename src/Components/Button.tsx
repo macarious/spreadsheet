@@ -7,12 +7,12 @@ import "../styles/Button.css"
 
 
 interface ButtonProps {
-  text: string;
+  text: string | React.ReactNode;
   isDigit: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
-  dataTestId: string; // add a data-testid prop
-} // interface ButtonProps
+  dataTestId: string;
+}
 
 const Button: React.FC<ButtonProps> = ({ text, isDigit, onClick, className, dataTestId }) => {
 

@@ -1,29 +1,52 @@
-.buttons{
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    flex-wrap:nowrap;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    width: 100%;
-    padding: 0;
-    list-style: none;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+.buttons {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.buttons button{
-    width: 50px;
-    height: 50px;
-    margin: 5px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    background-color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    color: #000;
-    cursor: pointer;
-    outline: none;
+.buttons button {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+}
+
+.fraction {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px; /* Adjust as needed */
+}
+
+.numerator {
+  display: block;
+  text-align: center;
+}
+
+.fraction-line {
+  display: block;
+  text-align: center;
+  border-top: 1px solid black; /* Adjust the line appearance as needed */
+  margin: 0 2px;
+}
+
+.denominator {
+  display: block;
+  text-align: center;
 }
