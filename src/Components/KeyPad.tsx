@@ -223,9 +223,12 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           className="button-operator"
           dataTestId="cubeRoot-button"
         />
+      </div>
+
+      <div className="buttons-row">
         <Button
           text="sin"
-          isDigit={false}
+          isDigit={true}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="sin-button"
@@ -252,12 +255,14 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           dataTestId="asin-button"
         />
         <Button
-          text="cos(-1)"
+          text="cos^(-1)"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="acos-button"
         />
+      </div>
+      <div className="buttons-row">
         <Button
           text="tan(-1)"
           isDigit={false}
@@ -271,6 +276,14 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="random-button"
+        />     
+
+<Button
+          text="+/-"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="negative-button"
         />     
       </div>
 

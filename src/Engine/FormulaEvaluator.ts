@@ -144,6 +144,10 @@ export class FormulaEvaluator {
     while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/" || this._currentFormula[0] === "x^2" || this._currentFormula[0] === "x^3" || this._currentFormula[0] === "1/x" || this._currentFormula[0] === "x^(1/2)" || this._currentFormula[0] === "x^(1/3)" || this._currentFormula[0] === "sin" || this._currentFormula[0] === "cos" || this._currentFormula[0] === "tan" || this._currentFormula[0] === "sin^-1" || this._currentFormula[0] === "cos^-1" || this._currentFormula[0] === "tan^-1" || this._currentFormula[0] === "Rand" || this._currentFormula[0] === "+/-")) {
       let operator = this._currentFormula.shift();
       let factor = this.factor();
+      if (this._errorOccured && (operator === "1/x" || operator === "x^(1/2)" || operator === "x^(1/3)" || operator === "sin" || operator === "cos" || operator === "tan" || operator === "sin^-1" || operator === "cos^-1" || operator === "tan^-1" || operator === "Rand" || operator === "+/-" || operator === "x^2" || operator === "x^3")) {
+        this._errorOccured = false;
+        this._errorMessage = "";
+      }
       if (operator === "*") {
         result *= factor;
       } else if (operator === "/") {
@@ -258,7 +262,11 @@ export class FormulaEvaluator {
           result = Math.random();
         }
       else if(operator === "+/-") {
+        if(result === 0){
+          result = 0;
+        } else{
         result = result * -1;
+        }
       }
     }
     // set the lastResult to the result
