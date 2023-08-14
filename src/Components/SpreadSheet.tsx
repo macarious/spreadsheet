@@ -292,6 +292,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
   return (
     <div>
+      <h1>Document Name: {documentName}</h1>
       <Formula
         formulaString={formulaString}
         resultString={resultString}
