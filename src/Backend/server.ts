@@ -22,6 +22,14 @@ app.post("/createSpreadsheet/:documentName", (req, res) => {
   return res.json({ message: "Document created or loaded" });
 });
 
+app.post("/deleteSpreadsheet/:documentName", (req, res) => {
+    const { documentName } = req.params;
+    if (spreadsheets[documentName]) {
+        delete spreadsheets[documentName];
+    }
+    return res.json({ message: "Document deleted" });
+    });
+
 app.get("/documents/:documentName/sheetState", (req, res) => {
   const { documentName } = req.params;
   const spreadsheet = spreadsheets[documentName];
@@ -107,6 +115,12 @@ app.get("/documents/:documentName/getVersion", (req, res) => {
 
   res.json({ version: spreadsheet.state.version });
 });
+
+// Define a route to get the names of all currently created documents
+app.get("/createdDocuments", (req, res) => {
+    const documentNames = Object.keys(spreadsheets);
+    res.json(documentNames);
+  });
 
 app.get("/documents/:documentName/cellStatus/:cellLabel", (req, res) => {
   const { documentName, cellLabel } = req.params;

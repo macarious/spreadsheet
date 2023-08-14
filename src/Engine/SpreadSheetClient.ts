@@ -5,6 +5,15 @@ const baseURL = `http://${hostname}:3005`;
  * A helper class to communicate with the server. Build requests and parse responses.
  */
 export default class SpreadSheetClient {
+  
+  static async getCreatedDocuments(): Promise<string[]> {
+    const response = await fetch(`${baseURL}/createdDocuments`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  }
+  
   static async createDocument(
     documentName: string
   ): Promise<{ message: string }> {
@@ -20,6 +29,24 @@ export default class SpreadSheetClient {
     }
 
     return { message: "Document created" };
+  }
+
+  //function that deletes documents given the name
+  static async deleteDocument(
+    documentName: string
+  ): Promise<{ message: string }> {
+    const response = await fetch(
+      `${baseURL}/deleteSpreadsheet/${documentName}`,
+      {
+        method: "POST",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    return { message: "Document deleted" };
   }
 
   static async fetchData(
