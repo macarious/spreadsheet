@@ -206,8 +206,26 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
-          dataTestId="reciprocal-button"
+          dataTestId="reciprocol-button"
         />
+        <Button
+          text="Rand"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="random-button"
+        />
+        <Button
+          text="+/-"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="negative-button"
+        />
+      </div>
+
+
+      <div className="buttons-row">
         <Button
           text="x^(1/2)"
           isDigit={false}
@@ -246,6 +264,9 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
           className="button-operator"
           dataTestId="tan-button"
         />
+      </div>
+
+      <div className="buttons-row">
         <Button
           text="sin^(-1)"
           isDigit={false}
@@ -263,7 +284,7 @@ function KeyPad({ onButtonClick, onCommandButtonClick, currentlyEditing }: KeyPa
       </div>
       <div className="buttons-row">
         <Button
-          text="tan(-1)"
+          text="tan^(-1)"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
