@@ -45,7 +45,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [currentlyEditing, setCurrentlyEditing] = useState(
     spreadSheetController.getEditStatus()
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [clientVersion, setClientVersion] = useState(0);
 
@@ -63,6 +63,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         console.error("Error fetching data:", err);
         setError(err);
       } finally {
+        console.log('set loading to false')
         setLoading(false);
       }
     }
