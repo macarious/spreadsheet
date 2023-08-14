@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import './styles/App.css'
 import SpreadSheet from './Components/SpreadSheet';
 import SpreadSheetClient from './Engine/SpreadSheetClient';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+
 
 export default function App() {
   const [documentName, setDocumentName] = useState("");
@@ -47,6 +49,8 @@ export default function App() {
     <Router>
       <div className="App">
         <header className="App-header">
+          <Card className = "menu-card">
+            <Card.Body>
           <input
             type="text"
             id="username"
@@ -71,6 +75,8 @@ export default function App() {
               ))}
             </div>
           )}
+          </Card.Body>
+          </Card>
           <Routes>
             {documentNames.map((docName) => (
               <Route

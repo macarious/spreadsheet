@@ -9,9 +9,24 @@
   * font is bold
   * font is courier
   */
+
+.formula-container{
+  display: flex;
+  flex-direction:column;
+  flex: 2;
+  justify-content: center;
+
+}
+
+.formula-title{
+  color: black;
+  font-size: 20px;
+
+}
+
 .formula {
-  background-color: #000000;
-  border: 5px solid #121412;
+  background-color: white;
+  border: 2px solid #121412;
   color: #039703;
   padding: 15px 32px;
   text-align: right;
@@ -20,7 +35,9 @@
   font-family: courier;
   font-size: 20px;
   font-weight: bold;
-  width: 250px;
+  margin-left:10px;
+  margin-right:10px;
+  width: 220px;
   height: 30px;
 }
 
@@ -33,5 +50,8 @@
   text-decoration: none;
   display: inline-block;
   font-family: courier;
-  width: 250px;
+  margin-left:10px;
+  margin-right:10px;
+  width: 220px;
+  height: 30px;
 }
