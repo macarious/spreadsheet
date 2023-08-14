@@ -17,9 +17,6 @@ import { after } from "node:test";
 import { act } from "react-dom/test-utils";
 
 
-
-
-
 describe("SpreadSheet ", () => {
 
     it("selects A3 enters 88 then presses done then selects A1 clicks on edit then clicks on A3 and sees 88", () => {
