@@ -1,8 +1,5 @@
-import React from "react";
-
 import Cell from "../Engine/Cell";
-
-import "../styles/SheetComponent.css"
+import "../styles/SheetComponent.css";
 
 // a component that will render a two dimensional array of cells
 // the cells will be rendered in a table
@@ -74,12 +71,12 @@ function SheetComponent({
         <tr>
           <td></td>
           {cellsValues[0].map((cell, colIndex) => (
-            <td key={colIndex}>{columnToLetter(colIndex)}</td>
+            <th key={colIndex}>{columnToLetter(colIndex)}</th>
           ))}
         </tr>
         {cellsValues.map((row, rowIndex) => (
           <tr key={rowIndex}>
-            <td className="row-number">{rowIndex + 1}</td>
+            <th className="row-number px-2">{rowIndex + 1}</th>
             {row.map((cell, colIndex) => (
               <td key={colIndex}>
                 <button

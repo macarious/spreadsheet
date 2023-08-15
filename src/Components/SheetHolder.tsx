@@ -1,7 +1,5 @@
-import React from "react";
-
 import SheetComponent from "./SheetComponent";
-import "../styles/SheetHolder.css"
+import "../styles/SheetHolder.css";
 
 // a wrapper for the sheet component that allows the sheet to be scrolled
 // the sheet is a grid of cells
@@ -16,13 +14,23 @@ interface SheetHolderProps {
   cellsValues: Array<Array<string>>;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentCell: string;
-  currentlyEditing:boolean
+  currentlyEditing: boolean;
 }
 
-function SheetHolder({ cellsValues, onClick, currentCell, currentlyEditing}: SheetHolderProps) {
+function SheetHolder({
+  cellsValues,
+  onClick,
+  currentCell,
+  currentlyEditing,
+}: SheetHolderProps) {
   return (
     <div className="sheet-holder">
-      <SheetComponent cellsValues={cellsValues} onClick={onClick} currentCell={currentCell}  currentlyEditing={currentlyEditing}  />
+      <SheetComponent
+        cellsValues={cellsValues}
+        onClick={onClick}
+        currentCell={currentCell}
+        currentlyEditing={currentlyEditing}
+      />
     </div>
   );
 } // SheetHolder

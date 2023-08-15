@@ -1,5 +1,4 @@
 .buttons {
-  flex: 3;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -12,6 +11,15 @@
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: scroll;
+}
+
+.buttons-row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons button {
@@ -21,7 +29,35 @@
   border: 1px solid #000;
   border-radius: 5px;
   background-color: #fff;
-  font-size: 13px;
+  font-size: 8px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+}
+
+.buttons .button-edit-end{
+  width: 470px;
+  height: 50px;
+  margin: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 8px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+}
+
+.buttons .button-edit-start{
+  width: 470px;
+  height: 50px;
+  margin: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 8px;
   font-weight: bold;
   color: #000;
   cursor: pointer;

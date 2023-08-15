@@ -1,6 +1,12 @@
 .App {
   text-align: center;
   height:100vh;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  background-image: linear-gradient(0deg, #F6C36A, 	#F6C36A);
+  background-clip: padding-box;
 }
 
 .App-logo {
@@ -10,7 +16,8 @@
 
 .App-header {
   background-color: white;
-  min-height: 100vh;
+  max-height: 96vh;
+  width: 96vw;
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -19,21 +26,10 @@
   height:100%;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.app-name{
-  color: purple;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.welcome-message{
-  font-weight: bold;
+.section-title{
   margin-top: 1rem;
-  margin-bottom: 1rem;
-  font-size: larger;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .form-main{
@@ -41,7 +37,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 250px;
+  width: 80%;
 }
 
 .card-header{
@@ -50,7 +46,6 @@
 }
 
 .menu-card{
-  width: 300px;
   height:100%;
   border-width: 0 !important;
 }
@@ -60,4 +55,5 @@
   height: 100%;
   margin-bottom: 0;
   border-width: 0 !important;
+  border-radius: 0 !important;
 }
