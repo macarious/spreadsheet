@@ -28,11 +28,11 @@
   background-color: white;
   border: 3px solid #707070;
   color: #ffffff;
-
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: large;
+
   width: 80px;
   height: 60px;
 }
@@ -45,13 +45,14 @@
   text-decoration: none;
   display: inline-block;
   font-size: large;
+
   width: 80px;
   height: 60px;
 }
 
 .button-control {
   background-color: white;
-  border: 1px solid #000000;
+  border: 3px solid #000000;
   color: black;
   text-align: center;
   text-decoration: none;

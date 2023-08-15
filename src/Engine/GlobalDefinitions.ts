@@ -16,10 +16,10 @@ export const ErrorMessages = {
 
 export const ButtonNames = {
   edit_toggle: "edit-toggle",
-  edit: "edit",
-  done: "=",
+  edit: "EDIT CELL",
+  done: "COMFIRM",
   allClear: "AC",
-  clear: "C",
+  clear: "DEL",
 }
 
 

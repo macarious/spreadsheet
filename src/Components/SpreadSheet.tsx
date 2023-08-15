@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Badge } from "react-bootstrap";
+import { Badge, Card } from "react-bootstrap";
 
 import SpreadSheetController from "../Engine/SpreadSheetController";
 import { ButtonNames } from "../Engine/GlobalDefinitions";
@@ -323,9 +323,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
   return (
     <div className="spreadsheet-container">
-      <div className="sheet-card d-flex flex-column">
-        <div className="d-flex flex-row justify-content-between mt-2 gap-3">
-          <p className="mt-1">
+      <Card className="sheet-card d-flex flex-column mt-1 pb-3"
+        style={{
+          backgroundColor: "#ffe094",
+          border: "3px solid black",
+          boxShadow: "5px 10px 18px #888888",
+        }}>
+        <div className="d-flex flex-row justify-content-between mt-2 gap-4"
+        style={{height: "50px"}}
+        >
+          <p>
             <b>Document Name: </b>
             <Badge bg="warning" style={{ color: "black", fontSize: "1.1rem" }}>
               {documentName}
@@ -344,8 +351,15 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
             }
           ></SheetHolder>
         }
-      </div>
-      <div className="formula-keypad-card d-flex flex-column gap-2">
+      </Card>
+      <Card
+        className="formula-keypad-card d-flex flex-column gap-2 p-2"
+        style={{
+          backgroundColor: "#bbe7f7",
+          border: "3px solid black",
+          boxShadow: "5px 10px 18px #888888",
+        }}
+      >
         <Formula
           formulaString={formulaString}
           resultString={resultString}
@@ -355,7 +369,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           onCommandButtonClick={onCommandButtonClick}
           currentlyEditing={localCurrentlyEditing}
         ></KeyPad>
-      </div>
+      </Card>
     </div>
   );
 }

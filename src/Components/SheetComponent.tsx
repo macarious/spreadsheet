@@ -111,7 +111,7 @@ function SheetComponent({
         </tr>
         {cellsValues.map((row, rowIndex) => (
           <tr key={rowIndex}>
-            <td className="row-number px-2">{rowIndex + 1}</td>
+            <th className="row-number px-2">{rowIndex + 1}</th>
             {row.map((cell, colIndex) => {
               const cellLabel = Cell.columnRowToCell(colIndex, rowIndex);
               const { className, style } = getCellClass(cellLabel);

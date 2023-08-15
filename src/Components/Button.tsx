@@ -1,10 +1,9 @@
 import React from "react";
-import "../styles/Button.css"
+import "../styles/Button.css";
 
 /**
  * Button component
  */
-
 
 interface ButtonProps {
   text: string | React.ReactNode;
@@ -14,8 +13,13 @@ interface ButtonProps {
   dataTestId: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, isDigit, onClick, className, dataTestId }) => {
-
+const Button: React.FC<ButtonProps> = ({
+  text,
+  isDigit,
+  onClick,
+  className,
+  dataTestId,
+}) => {
   return (
     <button
       className={className}
@@ -29,4 +33,3 @@ const Button: React.FC<ButtonProps> = ({ text, isDigit, onClick, className, data
 };
 
 export default Button;
-

@@ -95,18 +95,18 @@ export default function App() {
               </Button>
             </Form>
             {documentNames.length > 0 && (
-              <Card className="document-card mt-5">
+              <Card className="document-card mt-5" style={{backgroundColor: "#bbe7f7"}}>
                 <Card.Header className="card-header">
                   List of Documents
                 </Card.Header>
-                <Card.Body className="flex-column align-items-start justify-content-center">
+                <Card.Body className="flex-column align-items-start justify-content-center p-0">
                   {documentNames.map((docName) => (
                     <ListGroup
                       variant="flush"
                       key={docName}
                       className="document-entry "
                     >
-                      <ListGroup.Item className="d-flex align-items-center justify-content-between pb-1 px-0">
+                      <ListGroup.Item className="d-flex align-items-center justify-content-between pb-1 px-0 mx-3" style={{backgroundColor: "#bbe7f7"}}>
                         <Link
                           style={{ textDecoration: "none" }}
                           to={`/${docName}`}
@@ -122,7 +122,6 @@ export default function App() {
                           }}
                         />
                       </ListGroup.Item>
-                      <div></div>
                     </ListGroup>
                   ))}
                 </Card.Body>
