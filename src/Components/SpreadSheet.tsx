@@ -322,7 +322,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div className="spreadsheet-container">
+    <div className="spreadsheet-container m-0 p-0">
       <Card
         className="sheet-card d-flex flex-column mt-1 pb-3"
         style={{

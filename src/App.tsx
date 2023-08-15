@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {
+  Accordion,
   Button,
+  Card,
   CloseButton,
   Container,
   Form,
-  ListGroup,
   Nav,
   Navbar,
   NavDropdown,
@@ -14,6 +15,7 @@ import {
 import SpreadSheet from "./Components/SpreadSheet";
 import SpreadSheetClient from "./Engine/SpreadSheetClient";
 import "./styles/App.css";
+import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 
 export default function App() {
   const [documentName, setDocumentName] = useState("");
@@ -77,7 +79,7 @@ export default function App() {
           <Container
             className="d-flex flex-row align-items-center justify-content-between"
             style={{
-              maxWidth: "1024px",
+              maxWidth: "800px",
               height: "3rem",
             }}
           >
@@ -115,40 +117,71 @@ export default function App() {
           </Container>
         </Navbar>
         <header className="app-main-components">
-          <div className="menu-card d-flex flex-column align-items-center">
-            {window.location.pathname == "/" && (
-              <p className="mt-5">
-                Welcome to <b className="app-name">Learn and Excel</b>
-              </p>
-            )}
-            <p className="section-title">Document Manager</p>
-            <Form className="form-main">
-              <Form.Group className="mb-3 w-100" controlId="username">
-                <Form.Control
-                  aria-label="Enter Username"
-                  type="text"
-                  id="username"
-                  placeholder="Enter username"
-                  value={username}
-                  onChange={handleUsernameChange}
-                />
-              </Form.Group>
-            </Form>
-            <Form className="form-main" onSubmit={handleSubmit}>
-              <Form.Group className="mb-3 w-100" controlId="create-document">
-                <Form.Control
-                  aria-label="Enter Document Name"
-                  type="text"
-                  id="create-document"
-                  placeholder="Enter Document Name"
-                  onChange={(e) => setDocumentName(e.target.value)}
-                />
-              </Form.Group>
-              <Button variant="warning" type="submit">
-                <b>Create/Load Document</b>
-              </Button>
-            </Form>
-          </div>
+          <Accordion
+            defaultActiveKey="0"
+            className="sheet-card d-flex flex-column mt-1 pb-0"
+            style={{
+              backgroundColor: "#ffc0c0",
+              border: "3px solid black",
+              boxShadow: "5px 10px 18px #888888",
+              width: "702px",
+              borderRadius: "10px",
+            }}
+          >
+            <Accordion.Item
+              eventKey="0"
+              className="w-100"
+              style={{ borderRadius: "10px" }}
+            >
+              {window.location.pathname == "/" && (
+                <p
+                  className="mt-2"
+                  style={{ fontSize: "1.5rem", textAlign: "center" }}
+                >
+                  Welcome to <b className="app-name">Learn and Excel</b>
+                </p>
+              )}
+
+              <AccordionHeader className="section-header">
+                Document Manager
+              </AccordionHeader>
+              <Accordion.Body
+                className="d-flex flex-column align-items-center"
+                style={{
+                  backgroundColor: "#ffc0c0",
+                  borderEndStartRadius: "8px",
+                  borderEndEndRadius: "8px",
+                }}
+              >
+                <Form className="form-main">
+                  <Form.Group className="mb-3 w-50" controlId="username">
+                    <Form.Control
+                      aria-label="Enter Username"
+                      type="text"
+                      id="username"
+                      placeholder="Enter username"
+                      value={username}
+                      onChange={handleUsernameChange}
+                    />
+                  </Form.Group>
+                </Form>
+                <Form className="form-main" onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3 w-50" controlId="create-document">
+                    <Form.Control
+                      aria-label="Enter Document Name"
+                      type="text"
+                      id="create-document"
+                      placeholder="Enter Document Name"
+                      onChange={(e) => setDocumentName(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button variant="danger" type="submit">
+                    <b>Create/Load Document</b>
+                  </Button>
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
           <Routes>
             {documentNames.map((docName) => (
               <Route
