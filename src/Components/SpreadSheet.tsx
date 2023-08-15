@@ -318,7 +318,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
   return (
     <div className="spreadsheet-container">
-      <Card className="sheet-card">
+      <Card style={{display: 'flex', flexDirection: "column",height:"600px"}} className="sheet-card">
         <h1>Document Name: {documentName}</h1>
         <Status statusString={statusString}></Status>
         {
@@ -330,16 +330,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           ></SheetHolder>
         }
       </Card>
-      <Card className="formula-keypad-card">
-      <Formula
-          formulaString={formulaString}
-          resultString={resultString}
-        ></Formula>
-        <KeyPad
-          onButtonClick={onButtonClick}
-          onCommandButtonClick={onCommandButtonClick}
-          currentlyEditing={currentlyEditing}
-        ></KeyPad>
+      <Card style={{display:'flex', flexDirection: 'row', height: '300px'}} className="formula-keypad-card">
+          <Formula
+            formulaString={formulaString}
+            resultString={resultString}
+          ></Formula>
+          <KeyPad
+            onButtonClick={onButtonClick}
+            onCommandButtonClick={onCommandButtonClick}
+            currentlyEditing={currentlyEditing}
+          ></KeyPad>
       </Card>
     </div>
   );
