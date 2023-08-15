@@ -1,8 +1,7 @@
-import React from "react";
+import { Table } from "react-bootstrap";
 
 import Cell from "../Engine/Cell";
-
-import "../styles/SheetComponent.css"
+import "../styles/SheetComponent.css";
 
 // a component that will render a two dimensional array of cells
 // the cells will be rendered in a table

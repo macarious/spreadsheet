@@ -323,10 +323,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         <p className="section-title">Spreadsheet</p>
         <p className="mt-1">
           <b>Document Name: </b>
-          <Badge
-            bg="warning"
-            style={{ color: "black" }}
-          >
+          <Badge bg="warning" style={{ color: "black" }}>
             {documentName}
           </Badge>
         </p>
