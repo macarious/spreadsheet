@@ -117,6 +117,14 @@ export default function App() {
           </Container>
         </Navbar>
         <header className="app-main-components">
+          {window.location.pathname == "/" && (
+            <p
+              className="mt-5"
+              style={{ fontSize: "1.5rem", textAlign: "center" }}
+            >
+              Welcome to <b className="app-name">Learn and Excel</b>
+            </p>
+          )}
           <Accordion
             defaultActiveKey="0"
             className="sheet-card d-flex flex-column mt-1 pb-0"
@@ -133,15 +141,6 @@ export default function App() {
               className="w-100"
               style={{ borderRadius: "10px" }}
             >
-              {window.location.pathname == "/" && (
-                <p
-                  className="mt-2"
-                  style={{ fontSize: "1.5rem", textAlign: "center" }}
-                >
-                  Welcome to <b className="app-name">Learn and Excel</b>
-                </p>
-              )}
-
               <AccordionHeader className="section-header">
                 Document Manager
               </AccordionHeader>
