@@ -14,6 +14,7 @@ interface SheetComponentProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentCell: string;
   currentlyEditingUsernames: {[key: string]: string} ;
+  myUsername: string;
 } // interface SheetComponentProps
 
 //Cell.columnRowToCell(colIndex, rowIndex) will return the cell label
@@ -44,6 +45,7 @@ function SheetComponent({
   onClick,
   currentCell,
   currentlyEditingUsernames,
+  myUsername
 }: SheetComponentProps) {
   /**
    *
@@ -59,37 +61,31 @@ function SheetComponent({
    * otherwise the cell will be rendered with the class name "cell"
    */
   function getCellClass(cell: string) {
-    //check if cuurentlyEditingUsernames is undefined
-    if (currentlyEditingUsernames === undefined){
-      return {
-        className: "cell",
-        style: {}
-      };
-    }
     const currentlyEditingUsername = currentlyEditingUsernames[cell] || "";
-    if (cell === currentCell && currentlyEditingUsername) {
-      
-      return {
-        className: "cell-editing",
-        style: { borderColor: getUsernameColor(currentlyEditingUsername), borderWidth: "2px", borderStyle: "solid"}
-      };
-    }else if (currentlyEditingUsername){
-      return {
-        className: "cell",
-        style: { borderColor: getUsernameColor(currentlyEditingUsername), borderWidth: "2px", borderStyle: "solid"}
-      };
-    }else if (cell === currentCell) {
-      return {
-        className: "cell-selected",
-        style: {}
-      };
+    const baseColor = getUsernameColor(currentlyEditingUsername);
+    let className = "cell";
+    let style = {};
 
+    if (currentlyEditingUsername) {
+        className += " editing";
+        style = {
+            borderColor: (cell === currentCell) ? getUsernameColor(myUsername) : baseColor,
+            backgroundColor: baseColor + "33"
+        };
+    } else if (cell === currentCell) {
+        className += " editing";
+        style = {
+            borderColor: getUsernameColor(myUsername)
+        };
     }
+
     return {
-      className: "cell",
-      style: {}
+        className: className,
+        style: style
     };
-  }
+}
+
+
 
   /**
    *

@@ -334,6 +334,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
             onClick={onCellClick}
             currentCell={currentCell}
             currentlyEditingUsernames={currentlyEditing}
+            myUsername={(document.getElementById("username") as HTMLInputElement).value}
           ></SheetHolder>
         }
       </Card>
