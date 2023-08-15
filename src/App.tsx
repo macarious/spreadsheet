@@ -51,11 +51,11 @@ export default function App() {
         <header className="App-header">
           <Card className="menu-card mt-1 d-flex flex-column align-items-center">
             {window.location.pathname == "/" ? (
-              <p className="welcome-message">
+              <p className="section-title">
                 Welcome to <b className="app-name">Learn and Excel</b>
               </p>
             ) : (
-              <p className="welcome-message">
+              <p className="section-title">
                 <b>Document Manager</b>
               </p>
             )}

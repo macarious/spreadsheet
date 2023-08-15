@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+
+import SpreadSheetController from "../Engine/SpreadSheetController";
+import { ButtonNames } from "../Engine/GlobalDefinitions";
+import SheetHolder from "./SheetHolder";
 import Formula from "./Formula";
 import Status from "./Status";
 import KeyPad from "./KeyPad";
-import SpreadSheetController from "../Engine/SpreadSheetController";
-import SheetHolder from "./SheetHolder";
-import Card from "react-bootstrap/Card";
-import { ButtonNames } from "../Engine/GlobalDefinitions";
 import SpreadSheetClient from "../Engine/SpreadSheetClient";
 import "../styles/spreadsheet.css";
 
@@ -331,7 +332,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         }
       </Card>
       <Card className="formula-keypad-card">
-      <Formula
+        <Formula
           formulaString={formulaString}
           resultString={resultString}
         ></Formula>
