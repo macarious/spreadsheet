@@ -3,14 +3,10 @@
   height:100vh;
   background-image: linear-gradient(0deg, #F6C36A, 	#F6C36A);
   background-clip: padding-box;
+  width: 100wh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
+.app-main-components {
   background-color: #F6C36A;
   display: flex;
   flex-direction: row;
@@ -18,6 +14,7 @@
   justify-content: center;
   color: black;
   height:100%;
+  margin-top: 3rem;
 }
 
 .section-title{
@@ -57,6 +54,12 @@
   width: 100%;
   height: 100%;
   margin-bottom: 0;
-  border-width: 0 !important;
-  border-radius: 0 !important;
+}
+
+.document-entry :hover{
+  background-image : linear-gradient(90deg, #ffe094, 	#bbe7f7) !important;
+}
+
+.document-entry :active{
+  background-image : linear-gradient(90deg, #ebebeb, 	#bbe7f7) !important;
 }

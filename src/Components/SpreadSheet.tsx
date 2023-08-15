@@ -323,14 +323,17 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
   return (
     <div className="spreadsheet-container">
-      <Card className="sheet-card d-flex flex-column mt-1 pb-3"
+      <Card
+        className="sheet-card d-flex flex-column mt-1 pb-3"
         style={{
           backgroundColor: "#ffe094",
           border: "3px solid black",
           boxShadow: "5px 10px 18px #888888",
-        }}>
-        <div className="d-flex flex-row justify-content-between mt-2 gap-4"
-        style={{height: "50px"}}
+        }}
+      >
+        <div
+          className="d-flex flex-row justify-content-between mt-2 gap-4"
+          style={{ height: "50px" }}
         >
           <p>
             <b>Document Name: </b>

@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Button, Card, CloseButton, Form, ListGroup } from "react-bootstrap";
+import {
+  Button,
+  CloseButton,
+  Container,
+  Form,
+  ListGroup,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 
 import SpreadSheet from "./Components/SpreadSheet";
 import SpreadSheetClient from "./Engine/SpreadSheetClient";
@@ -57,7 +66,55 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
+        <Navbar
+          fixed="top"
+          bg="dark"
+          data-bs-theme="dark"
+          style={{
+            height: "3rem",
+          }}
+        >
+          <Container
+            className="d-flex flex-row align-items-center justify-content-between"
+            style={{
+              maxWidth: "1024px",
+              height: "3rem",
+            }}
+          >
+            <Navbar.Brand href="/">Learn and Excel</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                {documentNames.length > 0 && (
+                  <NavDropdown
+                    title="List of Documents"
+                    id="basic-nav-dropdown"
+                  >
+                    {documentNames.map((docName) => (
+                      <NavDropdown.Item
+                        href={`/${docName}`}
+                        key={docName}
+                        className="d-flex align-items-center justify-content-between"
+                      >
+                        {docName}
+                        <CloseButton
+                          className="mx-0 p-0"
+                          style={{ border: "none" }}
+                          aria-label="Remove document"
+                          aria-describedby={`Remove ${docName}`}
+                          onClick={() => {
+                            handleDeleteDocument(docName);
+                          }}
+                        />
+                      </NavDropdown.Item>
+                    ))}
+                  </NavDropdown>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <header className="app-main-components">
           <div className="menu-card d-flex flex-column align-items-center">
             {window.location.pathname == "/" && (
               <p className="mt-5">
@@ -91,57 +148,6 @@ export default function App() {
                 <b>Create/Load Document</b>
               </Button>
             </Form>
-            {documentNames.length > 0 && (
-              <div className="document-card mt-5">
-                <div className="document-header">List of Documents</div>
-                <div className="flex-column align-items-start justify-content-center p-0">
-                  {documentNames.map((docName) => (
-                    <ListGroup
-                      variant="flush"
-                      key={docName}
-                      className="document-entry "
-                    >
-                      <ListGroup.Item
-                        className="d-flex align-items-center justify-content-between py-0 px-0"
-                        style={{
-                          backgroundColor: "#bbe7f7",
-                          borderBottom: "1px solid #000",
-                        }}
-                      >
-                        <Link
-                          className="d-flex align-items-center justify-content-between w-100 mx-2"
-                          style={{
-                            textDecoration: "none",
-                            fontSize: "1.1rem",
-                            fontWeight: "bold",
-                          }}
-                          to={`/${docName}`}
-                        >
-                          {docName}
-                          <Button
-                            className="d-flex align-items-center justify-content-between py-2"
-                            style={{
-                              border: "none",
-                              backgroundColor: "#bbe7f7",
-                            }}
-                          >
-                            <CloseButton
-                              className="mx-0 p-0"
-                              style={{ border: "none" }}
-                              aria-label="Remove document"
-                              aria-describedby={`Remove ${docName}`}
-                              onClick={() => {
-                                handleDeleteDocument(docName);
-                              }}
-                            />
-                          </Button>
-                        </Link>
-                      </ListGroup.Item>
-                    </ListGroup>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
           <Routes>
             {documentNames.map((docName) => (
