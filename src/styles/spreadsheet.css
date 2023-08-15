@@ -4,16 +4,6 @@
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 50px;
-    padding-right: 50px;
-    background-color: #efefef;
-    color: #333;
-    min-height: 100%;
-    border-right: #333 solid 1px;
-    border-left: #333 solid 1px;
-    box-shadow: 5px 0 10px #333;
 }
 
 .sheet-card{
