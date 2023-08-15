@@ -17,7 +17,7 @@ export const ErrorMessages = {
 export const ButtonNames = {
   edit_toggle: "edit-toggle",
   edit: "EDIT CELL",
-  done: "COMFIRM",
+  done: "CONFIRM",
   allClear: "AC",
   clear: "DEL",
 }
