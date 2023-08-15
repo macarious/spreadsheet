@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './styles/App.css'
-import SpreadSheet from './Components/SpreadSheet';
-import SpreadSheetClient from './Engine/SpreadSheetClient';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Button, Card, CloseButton, Form, ListGroup } from "react-bootstrap";
 
+import SpreadSheet from "./Components/SpreadSheet";
+import SpreadSheetClient from "./Engine/SpreadSheetClient";
+import "./styles/App.css";
 
 export default function App() {
   const [documentName, setDocumentName] = useState("");
   const [documentNames, setDocumentNames] = useState<string[]>([]);
+  const [username, setUsername] = useState<string>(() => localStorage.getItem('username') || "");
+
 
   useEffect(() => {
     async function fetchDocumentNames() {
@@ -45,37 +47,80 @@ export default function App() {
     }
   };
 
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    localStorage.setItem('username', newUsername); // Store the updated username in local storage
+  };
+
   return (
     <Router>
       <div className="App">
         <header className="App-header">
-          <Card className = "menu-card">
-            <Card.Body>
-          <input
-            type="text"
-            id="username"
-            placeholder="username"
-          />
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Enter Document Name"
-              value={documentName}
-              onChange={(e) => setDocumentName(e.target.value)}
-            />
-            <button type="submit">Create Document</button>
-          </form>
-          {documentNames.length > 0 && (
-            <div>
-              {documentNames.map((docName) => (
-                <div key={docName} className="document-entry">
-                  <Link to={`/${docName}`}>{docName}</Link>
-                  <button onClick={() => handleDeleteDocument(docName)}>Delete</button>
-                </div>
-              ))}
-            </div>
-          )}
-          </Card.Body>
+          <Card className="menu-card mt-1 d-flex flex-column align-items-center">
+            {window.location.pathname == "/" ? (
+              <p className="welcome-message">
+                Welcome to <b className="app-name">Learn and Excel</b>
+              </p>
+            ) : (
+              <p className="welcome-message">
+                <b>Document Manager</b>
+              </p>
+            )}
+            <Form className="form-main">
+              <Form.Group className="mb-3 w-100" controlId="username">
+                <Form.Control
+                  aria-label="Enter Username"
+                  type="text"
+                  id="username"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={handleUsernameChange}
+                />
+              </Form.Group>
+            </Form>
+            <Form className="form-main" onSubmit={handleSubmit}>
+              <Form.Group className="mb-3 w-100" controlId="create-document">
+                <Form.Control
+                  aria-label="Enter Document Name"
+                  type="text"
+                  id="create-document"
+                  placeholder="Enter Document Name"
+                  onChange={(e) => setDocumentName(e.target.value)}
+                />
+              </Form.Group>
+              <Button variant="warning" type="submit">
+                <b>Create/Load Document</b>
+              </Button>
+            </Form>
+            {documentNames.length > 0 && (
+              <Card className="document-card mt-5">
+                <Card.Header className="card-header">
+                  List of Documents
+                </Card.Header>
+                <Card.Body className="flex-column align-items-start justify-content-center">
+                  {documentNames.map((docName) => (
+                    <ListGroup
+                      variant="flush"
+                      key={docName}
+                      className="document-entry "
+                    >
+                      <ListGroup.Item className="d-flex align-items-center justify-content-between py-1">
+                        <Link to={`/${docName}`}>{docName}</Link>
+                        <CloseButton
+                          className="mx-0 p-0"
+                          aria-label="Remove document"
+                          aria-describedby={`Remove ${docName}`}
+                          onClick={() => {
+                            handleDeleteDocument(docName);
+                          }}
+                        />
+                      </ListGroup.Item>
+                    </ListGroup>
+                  ))}
+                </Card.Body>
+              </Card>
+            )}
           </Card>
           <Routes>
             {documentNames.map((docName) => (
