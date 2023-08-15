@@ -340,17 +340,6 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           ></SheetHolder>
         }
       </Card>
-      <Card className="formula-keypad-card">
-        <Formula
-          formulaString={formulaString}
-          resultString={resultString}
-        ></Formula>
-        <KeyPad
-          onButtonClick={onButtonClick}
-          onCommandButtonClick={onCommandButtonClick}
-          currentlyEditing={currentlyEditing}
-        ></KeyPad>
-      </Card>
       <Card
         style={{ display: "flex", flexDirection: "row", height: "300px" }}
         className="formula-keypad-card"
