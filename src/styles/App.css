@@ -1,8 +1,8 @@
 .App {
   text-align: center;
   height:100vh;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   padding-left: 2vw;
   padding-right: 2vw;
   background-image: linear-gradient(0deg, #F6C36A, 	#F6C36A);
@@ -26,16 +26,6 @@
   height:100%;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.app-name{
-  color: purple;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
 .section-title{
   margin-top: 1rem;
   font-weight: bold;
@@ -56,15 +46,14 @@
 }
 
 .menu-card{
-  width:30vw;
   height:100%;
   border-width: 0 !important;
-  border-radius: 15px;
 }
 
 .document-card{
-  width: 80%;
+  width: 100%;
   height: 100%;
   margin-bottom: 0;
   border-width: 0 !important;
+  border-radius: 0 !important;
 }

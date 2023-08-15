@@ -104,7 +104,7 @@ export default function App() {
                       key={docName}
                       className="document-entry "
                     >
-                      <ListGroup.Item style={{backgroundColor: '#FBE5A2', marginBottom:'5px'}} className="d-flex align-items-center justify-content-between py-1">
+                      <ListGroup.Item style={{marginBottom:'5px'}} className="d-flex align-items-center justify-content-between py-1">
                         <Link style={{textDecoration:'none'}} to={`/${docName}`}>{docName}</Link>
                         <CloseButton
                           className="mx-0 p-0"

@@ -323,14 +323,15 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         className="sheet-card"
         style={{ display: "flex", flexDirection: "column", height: "600px" }}
       >
-        <p className="section-title">Spreadsheet</p>
-        <p className="mt-1">
-          <b>Document Name: </b>
-          <Badge bg="warning" style={{ color: "black" }}>
-            {documentName}
-          </Badge>
-        </p>
-        <Status statusString={statusString}></Status>
+        <div className="d-flex flex-row justify-content-between mt-3">
+          <p className="mt-1">
+            <b>Document Name: </b>
+            <Badge bg="warning" style={{ color: "black" }}>
+              {documentName}
+            </Badge>
+          </p>
+          <Status statusString={statusString}></Status>
+        </div>
         {
           <SheetHolder
             cellsValues={cells}
