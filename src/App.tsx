@@ -59,8 +59,8 @@ export default function App() {
       <div className="App">
         <header className="App-header">
           <Card
-            className="menu-card mt-1 d-flex flex-column align-items-center"
-            style={{ width: "300px" }}
+            className="menu-card d-flex flex-column align-items-center"
+            style={{ minWidth: "300px" }}
           >
             {window.location.pathname == "/" ? (
               <p className="section-title">

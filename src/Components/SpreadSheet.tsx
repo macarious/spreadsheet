@@ -324,7 +324,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div className="spreadsheet-container">
       <div className="sheet-card d-flex flex-column">
-        <div className="d-flex flex-row justify-content-between mt-5 gap-4">
+        <div className="d-flex flex-row justify-content-between mt-5 gap-3">
           <p className="mt-1">
             <b>Document Name: </b>
             <Badge bg="warning" style={{ color: "black", fontSize: "1.1rem" }}>
@@ -339,14 +339,13 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
             onClick={onCellClick}
             currentCell={currentCell}
             currentlyEditingUsernames={currentlyEditing}
-            myUsername={(document.getElementById("username") as HTMLInputElement).value}
+            myUsername={
+              (document.getElementById("username") as HTMLInputElement).value
+            }
           ></SheetHolder>
         }
       </div>
-      <div
-        style={{ height: "300px" }}
-        className="formula-keypad-card d-flex flex-column"
-      >
+      <div className="formula-keypad-card d-flex flex-column gap-5">
         <Formula
           formulaString={formulaString}
           resultString={resultString}

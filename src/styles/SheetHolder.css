@@ -3,9 +3,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
-  width: 100%;
-  height: 100%;
   overflow: auto;
   
   /* style the scroll bar track */
@@ -35,7 +32,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  gap: 0px;
 }
 
 .sheet-row {

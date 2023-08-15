@@ -10,26 +10,23 @@ interface SheetComponentProps {
   cellsValues: Array<Array<string>>;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentCell: string;
-  currentlyEditingUsernames: {[key: string]: string} ;
+  currentlyEditingUsernames: { [key: string]: string };
   myUsername: string;
 } // interface SheetComponentProps
 
 //Cell.columnRowToCell(colIndex, rowIndex) will return the cell label
 // you can use this to set the value of the button
 
-
 function stringToHash(str: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
   return hash;
 }
 
 function intToRGB(i: number): string {
-  const c = (i & 0x00FFFFFF)
-      .toString(16)
-      .toUpperCase();
+  const c = (i & 0x00ffffff).toString(16).toUpperCase();
   return "00000".substring(0, 6 - c.length) + c;
 }
 
@@ -42,7 +39,7 @@ function SheetComponent({
   onClick,
   currentCell,
   currentlyEditingUsernames,
-  myUsername
+  myUsername,
 }: SheetComponentProps) {
   /**
    *
@@ -64,25 +61,24 @@ function SheetComponent({
     let style = {};
 
     if (currentlyEditingUsername) {
-        className += " editing";
-        style = {
-            borderColor: (cell === currentCell) ? getUsernameColor(myUsername) : baseColor,
-            backgroundColor: baseColor + "33"
-        };
+      className += " editing";
+      style = {
+        borderColor:
+          cell === currentCell ? getUsernameColor(myUsername) : baseColor,
+        backgroundColor: baseColor + "33",
+      };
     } else if (cell === currentCell) {
-        className += " editing";
-        style = {
-            borderColor: getUsernameColor(myUsername)
-        };
+      className += " editing";
+      style = {
+        borderColor: getUsernameColor(myUsername),
+      };
     }
 
     return {
-        className: className,
-        style: style
+      className: className,
+      style: style,
     };
-}
-
-
+  }
 
   /**
    *
@@ -120,7 +116,7 @@ function SheetComponent({
               const cellLabel = Cell.columnRowToCell(colIndex, rowIndex);
               const { className, style } = getCellClass(cellLabel);
               return (
-                <td key={colIndex}>
+                <td key={colIndex} className="p-0">
                   <button
                     className={className}
                     style={style}
@@ -138,7 +134,6 @@ function SheetComponent({
       </tbody>
     </table>
   );
-  
 } // SheetComponent
 
 export default SheetComponent;
