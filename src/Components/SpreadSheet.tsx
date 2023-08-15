@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Badge, Card } from "react-bootstrap";
+
+import SpreadSheetController from "../Engine/SpreadSheetController";
+import { ButtonNames } from "../Engine/GlobalDefinitions";
+import SheetHolder from "./SheetHolder";
 import Formula from "./Formula";
 import Status from "./Status";
 import KeyPad from "./KeyPad";
-import SpreadSheetController from "../Engine/SpreadSheetController";
-import SheetHolder from "./SheetHolder";
-import Card from "react-bootstrap/Card";
-import { ButtonNames } from "../Engine/GlobalDefinitions";
 import SpreadSheetClient from "../Engine/SpreadSheetClient";
 import "../styles/spreadsheet.css";
 
@@ -323,11 +324,18 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div className="spreadsheet-container">
       <Card
-        style={{ display: "flex", flexDirection: "column", height: "600px" }}
         className="sheet-card"
+        style={{ display: "flex", flexDirection: "column", height: "600px" }}
       >
-        <h1>Document Name: {documentName}</h1>
-        <Status statusString={statusString}></Status>
+        <div className="d-flex flex-row justify-content-between mt-3">
+          <p className="mt-1">
+            <b>Document Name: </b>
+            <Badge bg="warning" style={{ color: "black" }}>
+              {documentName}
+            </Badge>
+          </p>
+          <Status statusString={statusString}></Status>
+        </div>
         {
           <SheetHolder
             cellsValues={cells}
@@ -339,8 +347,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         }
       </Card>
       <Card
-        style={{ display: "flex", flexDirection: "row", height: "300px" }}
-        className="formula-keypad-card"
+        style={{ height: "300px" }}
+        className="formula-keypad-card d-flex flex-column"
       >
         <Formula
           formulaString={formulaString}

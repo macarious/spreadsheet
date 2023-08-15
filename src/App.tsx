@@ -9,8 +9,9 @@ import "./styles/App.css";
 export default function App() {
   const [documentName, setDocumentName] = useState("");
   const [documentNames, setDocumentNames] = useState<string[]>([]);
-  const [username, setUsername] = useState<string>(() => localStorage.getItem('username') || "");
-
+  const [username, setUsername] = useState<string>(
+    () => localStorage.getItem("username") || ""
+  );
 
   useEffect(() => {
     async function fetchDocumentNames() {
@@ -50,22 +51,20 @@ export default function App() {
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
-    localStorage.setItem('username', newUsername); // Store the updated username in local storage
+    localStorage.setItem("username", newUsername); // Store the updated username in local storage
   };
 
   return (
     <Router>
       <div className="App">
         <header className="App-header">
-          <Card className="menu-card mt-1 d-flex flex-column align-items-center">
+          <Card className="menu-card mt-1 d-flex flex-column align-items-center" style={{width:"300px"}}>
             {window.location.pathname == "/" ? (
-              <p className="welcome-message">
+              <p className="section-title">
                 Welcome to <b className="app-name">Learn and Excel</b>
               </p>
             ) : (
-              <p className="welcome-message">
-                <b>Document Manager</b>
-              </p>
+              <p className="section-title">Document Manager</p>
             )}
             <Form className="form-main">
               <Form.Group className="mb-3 w-100" controlId="username">
@@ -105,7 +104,7 @@ export default function App() {
                       key={docName}
                       className="document-entry "
                     >
-                      <ListGroup.Item style={{backgroundColor: '#FBE5A2', marginBottom:'5px'}} className="d-flex align-items-center justify-content-between py-1">
+                      <ListGroup.Item style={{marginBottom:'5px'}} className="d-flex align-items-center justify-content-between py-1">
                         <Link style={{textDecoration:'none'}} to={`/${docName}`}>{docName}</Link>
                         <CloseButton
                           className="mx-0 p-0"

@@ -34,7 +34,36 @@ function KeyPad({
   // numberButton, operatorButton, and otherButton
   return (
     <div className="buttons">
+      <Button
+        text={doneButtonText}
+        isDigit={true}
+        onClick={() => onCommandButtonClick(ButtonNames.edit_toggle)}
+        className={getDoneButtonClass()}
+        dataTestId="edit-toggle-button"
+      />
+
       <div className="buttons-row">
+        <Button
+          text={<span>x²</span>}
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="square-button"
+        />
+        <Button
+          text={<span>x³</span>}
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="cube-button"
+        />
+        <Button
+          text="1/x"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="reciprocol-button"
+        />
         <Button
           text="7"
           isDigit={true}
@@ -74,6 +103,27 @@ function KeyPad({
 
       <div className="buttons-row">
         <Button
+          text="rand"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="random-button"
+        />
+        <Button
+          text="x^(1/2)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="squareRoot-button"
+        />
+        <Button
+          text="x^(1/3)"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="cubeRoot-button"
+        />
+        <Button
           text="4"
           isDigit={true}
           onClick={onButtonClick}
@@ -111,6 +161,27 @@ function KeyPad({
       </div>
 
       <div className="buttons-row">
+        <Button
+          text="sin"
+          isDigit={true}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="sin-button"
+        />
+        <Button
+          text="cos"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="cos-button"
+        />
+        <Button
+          text="tan"
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="tan-button"
+        />
         <Button
           text="1"
           isDigit={true}
@@ -150,6 +221,28 @@ function KeyPad({
 
       <div className="buttons-row">
         <Button
+          text={<span>sin⁻¹x</span>}
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="asin-button"
+        />
+        <Button
+          text={<span>cos⁻¹x</span>}
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="acos-button"
+        />
+
+        <Button
+          text={<span>tan⁻¹x</span>}
+          isDigit={false}
+          onClick={onButtonClick}
+          className="button-operator"
+          dataTestId="atan-button"
+        />
+        <Button
           text="0"
           isDigit={true}
           onClick={onButtonClick}
@@ -178,113 +271,11 @@ function KeyPad({
           dataTestId="right-parenthesis-button"
         />
         <Button
-          text={doneButtonText}
-          isDigit={true}
-          onClick={() => onCommandButtonClick(ButtonNames.edit_toggle)}
-          className={getDoneButtonClass()}
-          dataTestId="edit-toggle-button"
-        />
-      </div>
-
-      <div className="buttons-row">
-        <Button
-          text={<span>x²</span>}
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="square-button"
-        />
-        <Button
-          text={<span>x³</span>}
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="cube-button"
-        />
-        <Button
-          text="1/x"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="reciprocol-button"
-        />
-        <Button
-          text="rand"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="random-button"
-        />
-        <Button
           text="+/-"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="negative-button"
-        />
-      </div>
-
-      <div className="buttons-row">
-      <Button
-          text="x^(1/2)"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="squareRoot-button"
-        />
-          <Button
-          text="x^(1/3)"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="cubeRoot-button"
-        />
-
-        <Button
-          text="sin"
-          isDigit={true}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="sin-button"
-        />
-        <Button
-          text="cos"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="cos-button"
-        />
-        <Button
-          text="tan"
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="tan-button"
-        />
-      </div>
-
-      <div className="buttons-row">
-        <Button
-          text={<span>sin⁻¹x</span>}
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="asin-button"
-        />
-        <Button
-          text={<span>cos⁻¹x</span>}
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="acos-button"
-        />
-
-        <Button
-          text={<span>tan⁻¹x</span>}
-          isDigit={false}
-          onClick={onButtonClick}
-          className="button-operator"
-          dataTestId="atan-button"
         />
       </div>
     </div>
