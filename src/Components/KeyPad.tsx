@@ -202,13 +202,7 @@ function KeyPad({
           dataTestId="cube-button"
         />
         <Button
-          text={
-            <span className="fraction">
-              <span className="numerator">1</span>
-              <span className="fraction-line"></span>
-              <span className="denominator">x</span>
-            </span>
-          }
+          text="1/x"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
@@ -231,19 +225,15 @@ function KeyPad({
       </div>
 
       <div className="buttons-row">
-        <Button
-          text={
-            <span>
-              √<span className="square-root-x">x</span>
-            </span>
-          }
+      <Button
+          text="x^(1/2)"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
           dataTestId="squareRoot-button"
         />
-        <Button
-          text={<span>&#8731;x</span>}
+          <Button
+          text="x^(1/3)"
           isDigit={false}
           onClick={onButtonClick}
           className="button-operator"
