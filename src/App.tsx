@@ -60,7 +60,6 @@ export default function App() {
         <header className="App-header">
           <Card
             className="menu-card d-flex flex-column align-items-center"
-            style={{ minWidth: "300px" }}
           >
             {window.location.pathname == "/" ? (
               <p className="section-title">

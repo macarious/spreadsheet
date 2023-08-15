@@ -345,7 +345,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           ></SheetHolder>
         }
       </div>
-      <div className="formula-keypad-card d-flex flex-column gap-5">
+      <div className="formula-keypad-card d-flex flex-column gap-2">
         <Formula
           formulaString={formulaString}
           resultString={resultString}
