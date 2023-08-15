@@ -1,6 +1,12 @@
 .App {
   text-align: center;
   height:100vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  background-image: linear-gradient(0deg, #F6C36A, 	#F6C36A);
+  background-clip: padding-box;
 }
 
 .App-logo {
@@ -10,7 +16,8 @@
 
 .App-header {
   background-color: white;
-  min-height: 100vh;
+  max-height: 96vh;
+  width: 96vw;
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -40,7 +47,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 250px;
+  width: 80%;
 }
 
 .card-header{
@@ -49,12 +56,14 @@
 }
 
 .menu-card{
+  width:30vw;
   height:100%;
   border-width: 0 !important;
+  border-radius: 15px;
 }
 
 .document-card{
-  width: 100%;
+  width: 80%;
   height: 100%;
   margin-bottom: 0;
   border-width: 0 !important;
