@@ -79,7 +79,7 @@ export default function App() {
           <Container
             className="d-flex flex-row align-items-center justify-content-between"
             style={{
-              maxWidth: "800px",
+              maxWidth: "702px",
               height: "3rem",
             }}
           >
