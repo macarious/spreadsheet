@@ -43,6 +43,9 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     spreadSheetController.getWorkingCellLabel()
   );
   const [currentlyEditing, setCurrentlyEditing] = useState(
+   {} as {[key: string]: string}
+  );
+  const [localCurrentlyEditing, setLocalCurrentlyEditing] = useState(
     spreadSheetController.getEditStatus()
   );
   const [loading, setLoading] = useState(false);
@@ -90,6 +93,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
             updateDisplayValues(spreadSheetController);
             setClientVersion(numberServerVersion);
           }
+          setCurrentlyEditing(serverVersion.editingStatus);
+
         }
       } catch (error) {
         console.error("Error fetching version/data:", error);
@@ -160,7 +165,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     setStatusString(controller.getEditStatusString());
     setCells(controller.getSheetDisplayStringsForGUI());
     setCurrentCell(controller.getWorkingCellLabel());
-    setCurrentlyEditing(controller.getEditStatus());
+    setLocalCurrentlyEditing(controller.getEditStatus());
   }
 
   async function onCommandButtonClick(text: string): Promise<void> {
@@ -304,13 +309,13 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           cellsValues={cells}
           onClick={onCellClick}
           currentCell={currentCell}
-          currentlyEditing={currentlyEditing}
+          currentlyEditingUsernames={currentlyEditing}
         ></SheetHolder>
       }
       <KeyPad
         onButtonClick={onButtonClick}
         onCommandButtonClick={onCommandButtonClick}
-        currentlyEditing={currentlyEditing}
+        currentlyEditing={localCurrentlyEditing}
       ></KeyPad>
     </div>
   );

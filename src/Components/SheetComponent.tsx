@@ -13,17 +13,37 @@ interface SheetComponentProps {
   cellsValues: Array<Array<string>>;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentCell: string;
-  currentlyEditing: boolean;
+  currentlyEditingUsernames: {[key: string]: string} ;
 } // interface SheetComponentProps
 
 //Cell.columnRowToCell(colIndex, rowIndex) will return the cell label
 // you can use this to set the value of the button
 
+
+function stringToHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+function intToRGB(i: number): string {
+  const c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
+  return "00000".substring(0, 6 - c.length) + c;
+}
+
+function getUsernameColor(username: string): string {
+  return "#" + intToRGB(stringToHash(username));
+}
+
 function SheetComponent({
   cellsValues,
   onClick,
   currentCell,
-  currentlyEditing,
+  currentlyEditingUsernames,
 }: SheetComponentProps) {
   /**
    *
@@ -39,13 +59,36 @@ function SheetComponent({
    * otherwise the cell will be rendered with the class name "cell"
    */
   function getCellClass(cell: string) {
-    if (cell === currentCell && currentlyEditing) {
-      return "cell-editing";
+    //check if cuurentlyEditingUsernames is undefined
+    if (currentlyEditingUsernames === undefined){
+      return {
+        className: "cell",
+        style: {}
+      };
     }
-    if (cell === currentCell) {
-      return "cell-selected";
+    const currentlyEditingUsername = currentlyEditingUsernames[cell] || "";
+    if (cell === currentCell && currentlyEditingUsername) {
+      
+      return {
+        className: "cell-editing",
+        style: { borderColor: getUsernameColor(currentlyEditingUsername), borderWidth: "2px", borderStyle: "solid"}
+      };
+    }else if (currentlyEditingUsername){
+      return {
+        className: "cell",
+        style: { borderColor: getUsernameColor(currentlyEditingUsername), borderWidth: "2px", borderStyle: "solid"}
+      };
+    }else if (cell === currentCell) {
+      return {
+        className: "cell-selected",
+        style: {}
+      };
+
     }
-    return "cell";
+    return {
+      className: "cell",
+      style: {}
+    };
   }
 
   /**
@@ -80,25 +123,29 @@ function SheetComponent({
         {cellsValues.map((row, rowIndex) => (
           <tr key={rowIndex}>
             <td className="row-number">{rowIndex + 1}</td>
-            {row.map((cell, colIndex) => (
-              <td key={colIndex}>
-                <button
-                  className={getCellClass(
-                    Cell.columnRowToCell(colIndex, rowIndex)
-                  )}
-                  onClick={onClick}
-                  cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
-                  data-testid={Cell.columnRowToCell(colIndex, rowIndex)}
-                >
-                  {cell}
-                </button>
-              </td>
-            ))}
+            {row.map((cell, colIndex) => {
+              const cellLabel = Cell.columnRowToCell(colIndex, rowIndex);
+              const { className, style } = getCellClass(cellLabel);
+              return (
+                <td key={colIndex}>
+                  <button
+                    className={className}
+                    style={style}
+                    onClick={onClick}
+                    cell-label={cellLabel}
+                    data-testid={cellLabel}
+                  >
+                    {cell}
+                  </button>
+                </td>
+              );
+            })}
           </tr>
         ))}
       </tbody>
     </table>
   );
+  
 } // SheetComponent
 
 export default SheetComponent;

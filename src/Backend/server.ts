@@ -39,15 +39,6 @@ app.get("/documents/:documentName/sheetState", (req, res) => {
   res.json(spreadsheet.sheetState);
 });
 
-app.get("/documents/:documentName/sheetState", (req, res) => {
-  const { documentName } = req.params;
-  const spreadsheet = spreadsheets[documentName];
-  if (!spreadsheet) {
-    return res.status(404).json({ error: "Document not found" });
-  }
-  res.json(spreadsheet.sheetState);
-});
-
 app.post("/documents/:documentName/lockCell", (req, res) => {
   const { documentName } = req.params;
   const spreadsheet = spreadsheets[documentName];
@@ -112,8 +103,10 @@ app.get("/documents/:documentName/getVersion", (req, res) => {
   if (!spreadsheet) {
     return res.status(404).json({ error: "Document not found" });
   }
-
-  res.json({ version: spreadsheet.state.version });
+  //return version of the spreadsheet as well as the current editing status
+  res.json({
+    version: spreadsheet.state.version,
+    editingStatus: spreadsheet.getAllEditingStatus()});
 });
 
 // Define a route to get the names of all currently created documents
@@ -121,17 +114,6 @@ app.get("/createdDocuments", (req, res) => {
     const documentNames = Object.keys(spreadsheets);
     res.json(documentNames);
   });
-
-app.get("/documents/:documentName/cellStatus/:cellLabel", (req, res) => {
-  const { documentName, cellLabel } = req.params;
-  const spreadsheet = spreadsheets[documentName];
-  if (!spreadsheet) {
-    return res.status(404).json({ error: "Document not found" });
-  }
-
-  const editingBy = spreadsheet.getEditingStatus(cellLabel);
-  res.json({ editingBy });
-});
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
