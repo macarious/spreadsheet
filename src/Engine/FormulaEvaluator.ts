@@ -121,7 +121,7 @@ export class FormulaEvaluator {
       let term = this.term();
       if (operator === "+") {
         result += term;
-      } else {
+      } else if(operator === "-") {
         result -= term;
       }
     }
@@ -245,7 +245,11 @@ export class FormulaEvaluator {
         } else if (operator === "tan⁻¹x") {
           result = Math.atan(result);
         } else if (operator === "rand") {
-          result = Math.random();
+          if(result <= 1){
+            result = Math.random();
+          } else {
+            result = Math.floor(Math.random() * (result-1)) + 1;
+          }
         } else if (operator === "+/-") {
           if (result === 0) {
             result = 0;
