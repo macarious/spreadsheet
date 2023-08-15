@@ -9,10 +9,10 @@ With the backing of the government and the enthusiastic reception from local tea
 ## Development Team
 
 ### HUANG, Huixin
-Backend Developer (Calculator)
+Backend Developer - (Calculator)
 
 ### HUI, Macarious Kin Fung
-Frontend Developer and UI Designer
+Frontend Developer - (UI Design)
 
 ### WU, Victor
 Backend Developer – (Document Storage)
