@@ -8,7 +8,6 @@
   width: 100%;
   padding: 0;
   list-style: none;
-  background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   overflow: scroll;
@@ -23,13 +22,11 @@
 }
 
 .buttons button {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 45px;
   margin: 5px;
-  border: 1px solid #000;
   border-radius: 5px;
-  background-color: #fff;
-  font-size: 8px;
+  font-size: 16px;
   font-weight: bold;
   color: #000;
   cursor: pointer;
@@ -40,10 +37,10 @@
   width: 470px;
   height: 50px;
   margin: 5px;
-  border: 1px solid #000;
+  border: 3px solid #000;
   border-radius: 5px;
   background-color: #fff;
-  font-size: 8px;
+  font-size: 16px;
   font-weight: bold;
   color: #000;
   cursor: pointer;
@@ -54,10 +51,10 @@
   width: 470px;
   height: 50px;
   margin: 5px;
-  border: 1px solid #000;
+  border: 3px solid #000;
   border-radius: 5px;
   background-color: #fff;
-  font-size: 8px;
+  font-size: 16px;
   font-weight: bold;
   color: #000;
   cursor: pointer;

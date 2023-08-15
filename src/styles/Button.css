@@ -1,8 +1,8 @@
 
 
 .button-number {
-  background-color: white;
-  border: 1px solid #000000;
+  background-color: #F6C344;
+  border: 3px solid #000000;
   color: black;
 
   text-align: center;
@@ -14,8 +14,8 @@
 }
 
 .button-operator {
-  background-color: white;
-  border: 1px solid #512426;
+  background-color: #5DC7EC;
+  border: 3px solid #512426;
   color: black;
 
   text-align: center;
@@ -28,7 +28,7 @@
 
 .button-edit-end {
   background-color: white;
-  border: 1px solid #707070;
+  border: 3px solid #707070;
   color: #ffffff;
 
   text-align: center;
@@ -41,7 +41,7 @@
 
 .button-edit-start {
   background-color: white;
-  border: 1px solid #707070;
+  border: 3px solid #707070;
   color: #707070;
   text-align: center;
   text-decoration: none;
