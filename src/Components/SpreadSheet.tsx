@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Card } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 
 import SpreadSheetController from "../Engine/SpreadSheetController";
 import { ButtonNames } from "../Engine/GlobalDefinitions";
@@ -342,8 +342,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
             myUsername={(document.getElementById("username") as HTMLInputElement).value}
           ></SheetHolder>
         }
-      </Card>
-      <Card
+      </div>
+      <div
         style={{ height: "300px" }}
         className="formula-keypad-card d-flex flex-column"
       >
