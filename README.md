@@ -6,6 +6,24 @@ This project aims to provide a simple, intuitive, and collaborative spreadsheet 
 
 With the backing of the government and the enthusiastic reception from local teachers, our project's primary goal is to make math and computing accessible to students. The simplified collaborative spreadsheet will allow students to grasp the basics without unnecessary complexities. 
 
+## Development Team
+
+### HUANG, Huixin
+Backend Developer - (Calculator)
+
+### HUI, Macarious Kin Fung
+Frontend Developer - (UI Design)
+
+### WU, Victor
+Backend Developer – (Document Storage)
+
+### ZHANG, Tianyi
+Backend Developer – (Spreadsheet)
+
+## Technologies
+
+Our tech stack includes a React Typescript application for the frontend. The project is styled with React Bootstrap and uses the React Router library for navigation. Testing uses the jest library. The server is deployed on AWS EC2 instance. The spreadsheets are stored locally on the server. 
+
 ## Features
 
 ### Collaborative Editing
@@ -24,9 +42,9 @@ Apart from basic spreadsheet functionalities, additional calculator functions ar
 
 ## Implementation
 
-- **Separation of Concerns:** The application is designed to separate state logic and server logic. While the server (`server.ts`) handles the HTTP requests and responses, the actual state of the spreadsheet, including data and locking mechanism, is managed by `database.ts`.
+- **Separation of Concerns:** The application is designed to separate state logic and server logic. While the server (`src\Backend\server.ts`) handles the HTTP requests and responses, the actual state of the spreadsheet, including data and locking mechanism, is managed by `src\Backend\Spreadsheet.ts`.
   
-- **Singleton Database Class:** The `SpreadsheetDatabase` class in `database.ts` acts as a single source of truth, ensuring that all operations reflect the most recent state of the application. This class provides methods for cell locking, unlocking, updating cell data, and fetching editing status.
+- **Singleton Database Class:** The `Spreadsheet` class in `src\Backend\Spreadsheet.ts` acts as a single source of truth, ensuring that all operations reflect the most recent state of the application. This class provides methods for cell locking, unlocking, updating cell data, and fetching editing status.
 
 - **Conflict Handling:** To manage the editing of cells by multiple users, a locking mechanism is implemented. When a user locks a cell for editing, others cannot edit it until it's unlocked. This ensures data integrity and provides a smooth user experience.
 

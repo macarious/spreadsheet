@@ -1,8 +1,10 @@
+
+
 .button-number {
-  background-color: #514caf;
-  border: 5px solid #000000;
-  color: white;
-  padding: 5px 5px;
+  background-color: white;
+  border: 1px solid #000000;
+  color: black;
+
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -12,10 +14,10 @@
 }
 
 .button-operator {
-  background-color: #512426;
-  border: 5px solid #000000;
-  color: white;
-  padding: 5px 5px;
+  background-color: white;
+  border: 1px solid #512426;
+  color: black;
+
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -25,10 +27,10 @@
 }
 
 .button-edit-end {
-  background-color: #707070;
-  border: 5px solid #000000;
+  background-color: white;
+  border: 1px solid #707070;
   color: #ffffff;
-  padding: 5px 5px;
+
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -38,10 +40,9 @@
 }
 
 .button-edit-start {
-  background-color: #707070;
-  border: 5px solid #000000;
-  color: white;
-  padding: 5px 5px;
+  background-color: white;
+  border: 1px solid #707070;
+  color: #707070;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -51,10 +52,9 @@
 }
 
 .button-control {
-  background-color: #000000;
-  border: 5px solid #000000;
-  color: rgb(255, 255, 255);
-  padding: 5px 5px;
+  background-color: white;
+  border: 1px solid #000000;
+  color: black;
   text-align: center;
   text-decoration: none;
   display: inline-block;

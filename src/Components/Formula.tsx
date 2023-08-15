@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Formula.css";
+import "../styles/Formula.css"
 
 
 
@@ -17,14 +17,14 @@ type FormulaProps = {
 
 const Formula: React.FC<FormulaProps> = ({ formulaString, resultString }) => {
   return (
-    <div>
-      <span data-testid="FormulaTitle">Formula </span>
+    <div className="formula-container">
+      <span className= "formula-title" data-testid="FormulaTitle">Formula </span>
       <br />
       <div className="formula">
         <span data-testid="FormulaValue">{formulaString} </span>
       </div>
       <br />
-      <span data-testid="Result">Result</span>
+      <span className="formula-title" data-testid="Result">Result</span>
       <br />
       <div className="formula">
         <span data-testid="FormulaResult">{resultString}</span>
