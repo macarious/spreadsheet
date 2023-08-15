@@ -134,6 +134,9 @@ export class FormulaEvaluator {
     return result;
   }
 
+  private allowedOperator(): boolean {
+    return (this._currentFormula[0] === "*" || this._currentFormula[0] === "/" || this._currentFormula[0] === "x²" || this._currentFormula[0] === "x³" || this._currentFormula[0] === "1/x" || this._currentFormula[0] === "x^(1/2)" || this._currentFormula[0] === "x^(1/3)" || this._currentFormula[0] === "sin" || this._currentFormula[0] === "cos" || this._currentFormula[0] === "tan" || this._currentFormula[0] === "sin⁻¹x" || this._currentFormula[0] === "cos⁻¹x" || this._currentFormula[0] === "tan⁻¹x" || this._currentFormula[0] === "rand" || this._currentFormula[0] === "+/-");
+  }
   /**
    *  
    * @returns The value of the term in the tokenized formula
@@ -144,10 +147,10 @@ export class FormulaEvaluator {
       return this._lastResult;
     }
     let result = this.factor();
-    while (this._currentFormula.length > 0 && (this._currentFormula[0] === "*" || this._currentFormula[0] === "/" || this._currentFormula[0] === "x^2" || this._currentFormula[0] === "x^3" || this._currentFormula[0] === "1/x" || this._currentFormula[0] === "x^(1/2)" || this._currentFormula[0] === "x^(1/3)" || this._currentFormula[0] === "sin" || this._currentFormula[0] === "cos" || this._currentFormula[0] === "tan" || this._currentFormula[0] === "sin^-1" || this._currentFormula[0] === "cos^-1" || this._currentFormula[0] === "tan^-1" || this._currentFormula[0] === "Rand" || this._currentFormula[0] === "+/-")) {
+    while (this._currentFormula.length > 0 && this.allowedOperator()) {
       let operator = this._currentFormula.shift();
       let factor = this.factor();
-      if (this._errorOccured && (operator === "1/x" || operator === "x^(1/2)" || operator === "x^(1/3)" || operator === "sin" || operator === "cos" || operator === "tan" || operator === "sin^-1" || operator === "cos^-1" || operator === "tan^-1" || operator === "Rand" || operator === "+/-" || operator === "x^2" || operator === "x^3")) {
+      if (this._errorOccured && (operator === "1/x" || operator === "x^(1/2)" || operator === "x^(1/3)" || operator === "sin" || operator === "cos" || operator === "tan" || operator === "sin⁻¹x" || operator === "cos⁻¹x" || operator === "tan⁻¹x" || operator === "rand" || operator === "+/-" || operator === "x²" || operator === "x³")) {
         this._errorOccured = false;
         this._errorMessage = "";
       }
@@ -163,9 +166,9 @@ export class FormulaEvaluator {
         }
         // we are ok, lets divide
         result /= factor;
-      } else if (operator === "x^2") {
+      } else if (operator === "x²") {
         result = Math.pow(result, 2);
-      } else if(operator === "x^3") {
+      } else if(operator === "x³") {
         result = Math.pow(result, 3);
       } else if (operator === "1/x") {
         if(result === 0){
@@ -235,7 +238,7 @@ export class FormulaEvaluator {
           return NaN;
         }
         result = Math.tan(result);
-      } else if(operator === "sin^-1") {
+      } else if(operator === "sin⁻¹x") {
         if(result < -1 || result > 1){
           this._errorOccured = true;
           this._errorMessage = ErrorMessages.invalidInput;
@@ -250,7 +253,7 @@ export class FormulaEvaluator {
         } else {
           result = Math.asin(result);
         }
-      } else if(operator === "cos^-1") {
+      } else if(operator === "cos⁻¹x") {
         if(result < -1 || result > 1){
           this._errorOccured = true;
           this._errorMessage = ErrorMessages.invalidInput;
@@ -259,9 +262,9 @@ export class FormulaEvaluator {
         }else{
           result = Math.acos(result);
         }
-      } else if(operator === "tan^-1") {
+      } else if(operator === "tan⁻¹x") {
           result = Math.atan(result);
-        } else if(operator === "Rand") {
+        } else if(operator === "rand") {
           result = Math.random();
         }
       else if(operator === "+/-") {
