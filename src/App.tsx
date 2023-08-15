@@ -9,6 +9,8 @@ import "./styles/App.css";
 export default function App() {
   const [documentName, setDocumentName] = useState("");
   const [documentNames, setDocumentNames] = useState<string[]>([]);
+  const [username, setUsername] = useState<string>(() => localStorage.getItem('username') || "");
+
 
   useEffect(() => {
     async function fetchDocumentNames() {
@@ -45,6 +47,12 @@ export default function App() {
     }
   };
 
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    localStorage.setItem('username', newUsername); // Store the updated username in local storage
+  };
+
   return (
     <Router>
       <div className="App">
@@ -66,6 +74,8 @@ export default function App() {
                   type="text"
                   id="username"
                   placeholder="Enter username"
+                  value={username}
+                  onChange={handleUsernameChange}
                 />
               </Form.Group>
             </Form>
