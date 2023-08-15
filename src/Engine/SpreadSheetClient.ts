@@ -141,7 +141,7 @@ export default class SpreadSheetClient {
     return await response.json();
   }
 
-  static async getVersion(documentName: string): Promise<{ version: string }> {
+  static async getVersion(documentName: string): Promise<{ version: string, editingStatus: {[key: string]: string}}> {
     const response = await fetch(
       `${baseURL}/documents/${documentName}/getVersion`
     );

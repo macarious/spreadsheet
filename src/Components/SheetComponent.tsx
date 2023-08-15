@@ -10,17 +10,39 @@ interface SheetComponentProps {
   cellsValues: Array<Array<string>>;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentCell: string;
-  currentlyEditing: boolean;
+  currentlyEditingUsernames: {[key: string]: string} ;
+  myUsername: string;
 } // interface SheetComponentProps
 
 //Cell.columnRowToCell(colIndex, rowIndex) will return the cell label
 // you can use this to set the value of the button
 
+
+function stringToHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+function intToRGB(i: number): string {
+  const c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
+  return "00000".substring(0, 6 - c.length) + c;
+}
+
+function getUsernameColor(username: string): string {
+  return "#" + intToRGB(stringToHash(username));
+}
+
 function SheetComponent({
   cellsValues,
   onClick,
   currentCell,
-  currentlyEditing,
+  currentlyEditingUsernames,
+  myUsername
 }: SheetComponentProps) {
   /**
    *
@@ -36,14 +58,31 @@ function SheetComponent({
    * otherwise the cell will be rendered with the class name "cell"
    */
   function getCellClass(cell: string) {
-    if (cell === currentCell && currentlyEditing) {
-      return "cell-editing";
+    const currentlyEditingUsername = currentlyEditingUsernames[cell] || "";
+    const baseColor = getUsernameColor(currentlyEditingUsername);
+    let className = "cell";
+    let style = {};
+
+    if (currentlyEditingUsername) {
+        className += " editing";
+        style = {
+            borderColor: (cell === currentCell) ? getUsernameColor(myUsername) : baseColor,
+            backgroundColor: baseColor + "33"
+        };
+    } else if (cell === currentCell) {
+        className += " editing";
+        style = {
+            borderColor: getUsernameColor(myUsername)
+        };
     }
-    if (cell === currentCell) {
-      return "cell-selected";
-    }
-    return "cell";
-  }
+
+    return {
+        className: className,
+        style: style
+    };
+}
+
+
 
   /**
    *
@@ -76,26 +115,30 @@ function SheetComponent({
         </tr>
         {cellsValues.map((row, rowIndex) => (
           <tr key={rowIndex}>
-            <th className="row-number px-2">{rowIndex + 1}</th>
-            {row.map((cell, colIndex) => (
-              <td key={colIndex}>
-                <button
-                  className={getCellClass(
-                    Cell.columnRowToCell(colIndex, rowIndex)
-                  )}
-                  onClick={onClick}
-                  cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
-                  data-testid={Cell.columnRowToCell(colIndex, rowIndex)}
-                >
-                  {cell}
-                </button>
-              </td>
-            ))}
+            <td className="row-number px-2">{rowIndex + 1}</td>
+            {row.map((cell, colIndex) => {
+              const cellLabel = Cell.columnRowToCell(colIndex, rowIndex);
+              const { className, style } = getCellClass(cellLabel);
+              return (
+                <td key={colIndex}>
+                  <button
+                    className={className}
+                    style={style}
+                    onClick={onClick}
+                    cell-label={cellLabel}
+                    data-testid={cellLabel}
+                  >
+                    {cell}
+                  </button>
+                </td>
+              );
+            })}
           </tr>
         ))}
       </tbody>
     </table>
   );
+  
 } // SheetComponent
 
 export default SheetComponent;
