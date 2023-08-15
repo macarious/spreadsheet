@@ -35,9 +35,9 @@ class Spreadsheet {
         }
         return false;
     }
-
-    getEditingStatus(cellLabel: string): string | null {
-        return this.cellEditingStatus[cellLabel] || null;
+    
+    getAllEditingStatus(): { [key: string]: string } {
+        return this.cellEditingStatus;
     }
 }
 
