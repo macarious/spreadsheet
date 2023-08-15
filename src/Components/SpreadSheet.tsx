@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
+import { Badge, Card } from "react-bootstrap";
 
 import SpreadSheetController from "../Engine/SpreadSheetController";
 import { ButtonNames } from "../Engine/GlobalDefinitions";
@@ -320,7 +320,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div className="spreadsheet-container">
       <Card className="sheet-card">
-        <h1>Document Name: {documentName}</h1>
+        <p className="section-title">Spreadsheet</p>
+        <p className="mt-1">
+          <b>Document Name: </b>
+          <Badge
+            bg="warning"
+            style={{ color: "black" }}
+          >
+            {documentName}
+          </Badge>
+        </p>
         <Status statusString={statusString}></Status>
         {
           <SheetHolder
