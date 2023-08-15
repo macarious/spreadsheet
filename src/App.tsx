@@ -58,16 +58,13 @@ export default function App() {
     <Router>
       <div className="App">
         <header className="App-header">
-          <Card
-            className="menu-card d-flex flex-column align-items-center"
-          >
-            {window.location.pathname == "/" ? (
-              <p className="section-title">
+          <div className="menu-card d-flex flex-column align-items-center">
+            {window.location.pathname == "/" && (
+              <p className="mt-5">
                 Welcome to <b className="app-name">Learn and Excel</b>
               </p>
-            ) : (
-              <p className="section-title">Document Manager</p>
             )}
+            <p className="section-title">Document Manager</p>
             <Form className="form-main">
               <Form.Group className="mb-3 w-100" controlId="username">
                 <Form.Control
@@ -95,39 +92,57 @@ export default function App() {
               </Button>
             </Form>
             {documentNames.length > 0 && (
-              <Card className="document-card mt-5" style={{backgroundColor: "#bbe7f7"}}>
-                <Card.Header className="card-header">
-                  List of Documents
-                </Card.Header>
-                <Card.Body className="flex-column align-items-start justify-content-center p-0">
+              <div className="document-card mt-5">
+                <div className="document-header">List of Documents</div>
+                <div className="flex-column align-items-start justify-content-center p-0">
                   {documentNames.map((docName) => (
                     <ListGroup
                       variant="flush"
                       key={docName}
                       className="document-entry "
                     >
-                      <ListGroup.Item className="d-flex align-items-center justify-content-between pb-1 px-0 mx-3" style={{backgroundColor: "#bbe7f7"}}>
+                      <ListGroup.Item
+                        className="d-flex align-items-center justify-content-between py-0 px-0"
+                        style={{
+                          backgroundColor: "#bbe7f7",
+                          borderBottom: "1px solid #000",
+                        }}
+                      >
                         <Link
-                          style={{ textDecoration: "none" }}
+                          className="d-flex align-items-center justify-content-between w-100 mx-2"
+                          style={{
+                            textDecoration: "none",
+                            fontSize: "1.1rem",
+                            fontWeight: "bold",
+                          }}
                           to={`/${docName}`}
                         >
                           {docName}
+                          <Button
+                            className="d-flex align-items-center justify-content-between py-2"
+                            style={{
+                              border: "none",
+                              backgroundColor: "#bbe7f7",
+                            }}
+                          >
+                            <CloseButton
+                              className="mx-0 p-0"
+                              style={{ border: "none" }}
+                              aria-label="Remove document"
+                              aria-describedby={`Remove ${docName}`}
+                              onClick={() => {
+                                handleDeleteDocument(docName);
+                              }}
+                            />
+                          </Button>
                         </Link>
-                        <CloseButton
-                          className="mx-0 p-0"
-                          aria-label="Remove document"
-                          aria-describedby={`Remove ${docName}`}
-                          onClick={() => {
-                            handleDeleteDocument(docName);
-                          }}
-                        />
                       </ListGroup.Item>
                     </ListGroup>
                   ))}
-                </Card.Body>
-              </Card>
+                </div>
+              </div>
             )}
-          </Card>
+          </div>
           <Routes>
             {documentNames.map((docName) => (
               <Route
