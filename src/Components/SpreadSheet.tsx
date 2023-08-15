@@ -324,7 +324,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div className="spreadsheet-container">
       <div className="sheet-card d-flex flex-column">
-        <div className="d-flex flex-row justify-content-between mt-5 gap-3">
+        <div className="d-flex flex-row justify-content-between mt-2 gap-3">
           <p className="mt-1">
             <b>Document Name: </b>
             <Badge bg="warning" style={{ color: "black", fontSize: "1.1rem" }}>
