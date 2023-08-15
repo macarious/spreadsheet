@@ -342,7 +342,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
       </Card>
       <Card
         style={{ height: "300px" }}
-        className="formula-keypad-card d-flex flex-row"
+        className="formula-keypad-card d-flex flex-column"
       >
         <Formula
           formulaString={formulaString}
