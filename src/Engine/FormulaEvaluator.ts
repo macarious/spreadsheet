@@ -239,29 +239,9 @@ export class FormulaEvaluator {
           }
           result = Math.tan(result);
         } else if (operator === "sin⁻¹x") {
-          if (result < -1 || result > 1) {
-            this._errorOccured = true;
-            this._errorMessage = ErrorMessages.invalidInput;
-            this._lastResult = NaN;
-            return NaN;
-          } else if (result === 0) {
-            result = 0;
-          } else if (result === 1) {
-            result = 90;
-          } else if (result === -1) {
-            result = -90;
-          } else {
-            result = Math.asin(result);
-          }
+          result = Math.asin(result);
         } else if (operator === "cos⁻¹x") {
-          if (result < -1 || result > 1) {
-            this._errorOccured = true;
-            this._errorMessage = ErrorMessages.invalidInput;
-            this._lastResult = NaN;
-            return NaN;
-          } else {
-            result = Math.acos(result);
-          }
+          result = Math.acos(result);
         } else if (operator === "tan⁻¹x") {
           result = Math.atan(result);
         } else if (operator === "rand") {
@@ -275,6 +255,7 @@ export class FormulaEvaluator {
         }
         continue;
       }
+    
       let factor = this.factor();
       if (operator === "*") {
         result *= factor;
@@ -294,6 +275,7 @@ export class FormulaEvaluator {
     this._lastResult = result;
     return result;
   }
+
 
   /**
    *
