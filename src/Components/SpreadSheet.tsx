@@ -319,32 +319,24 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
   return (
     <div className="spreadsheet-container">
-      <Card
-        className="sheet-card"
-        style={{ display: "flex", flexDirection: "column", height: "600px" }}
-      >
-        <div className="d-flex flex-row justify-content-between mt-3">
+      <div className="sheet-card d-flex flex-column">
+        <div className="d-flex flex-row justify-content-between mt-5 gap-4">
           <p className="mt-1">
             <b>Document Name: </b>
-            <Badge bg="warning" style={{ color: "black" }}>
+            <Badge bg="warning" style={{ color: "black", fontSize: "1.1rem" }}>
               {documentName}
             </Badge>
           </p>
           <Status statusString={statusString}></Status>
         </div>
-        {
-          <SheetHolder
-            cellsValues={cells}
-            onClick={onCellClick}
-            currentCell={currentCell}
-            currentlyEditing={currentlyEditing}
-          ></SheetHolder>
-        }
-      </Card>
-      <Card
-        style={{ height: "300px" }}
-        className="formula-keypad-card d-flex flex-column"
-      >
+        <SheetHolder
+          cellsValues={cells}
+          onClick={onCellClick}
+          currentCell={currentCell}
+          currentlyEditing={currentlyEditing}
+        ></SheetHolder>
+      </div>
+      <div className="formula-keypad-card d-flex flex-column my-2">
         <Formula
           formulaString={formulaString}
           resultString={resultString}
@@ -354,7 +346,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           onCommandButtonClick={onCommandButtonClick}
           currentlyEditing={currentlyEditing}
         ></KeyPad>
-      </Card>
+      </div>
     </div>
   );
 }

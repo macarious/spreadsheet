@@ -58,7 +58,10 @@ export default function App() {
     <Router>
       <div className="App">
         <header className="App-header">
-          <Card className="menu-card mt-1 d-flex flex-column align-items-center" style={{width:"300px"}}>
+          <Card
+            className="menu-card mt-1 d-flex flex-column align-items-center"
+            style={{ width: "300px" }}
+          >
             {window.location.pathname == "/" ? (
               <p className="section-title">
                 Welcome to <b className="app-name">Learn and Excel</b>
@@ -97,15 +100,20 @@ export default function App() {
                 <Card.Header className="card-header">
                   List of Documents
                 </Card.Header>
-                <Card.Body style={{backgroundColor: '#fafafa'}} className="flex-column align-items-start justify-content-center">
+                <Card.Body className="flex-column align-items-start justify-content-center">
                   {documentNames.map((docName) => (
                     <ListGroup
                       variant="flush"
                       key={docName}
                       className="document-entry "
                     >
-                      <ListGroup.Item style={{marginBottom:'5px'}} className="d-flex align-items-center justify-content-between py-1">
-                        <Link style={{textDecoration:'none'}} to={`/${docName}`}>{docName}</Link>
+                      <ListGroup.Item className="d-flex align-items-center justify-content-between pb-1 px-0">
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          to={`/${docName}`}
+                        >
+                          {docName}
+                        </Link>
                         <CloseButton
                           className="mx-0 p-0"
                           aria-label="Remove document"
@@ -115,6 +123,7 @@ export default function App() {
                           }}
                         />
                       </ListGroup.Item>
+                      <div></div>
                     </ListGroup>
                   ))}
                 </Card.Body>

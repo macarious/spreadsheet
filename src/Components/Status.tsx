@@ -21,7 +21,7 @@ const Status: React.FC<StatusProps> = ({ statusString }) => {
   return (
     <p className="mt-1">
       <b>{splitStatusString(statusString)[0]}: </b>
-      <Badge bg="info" style={{ color: "black" }}>
+      <Badge bg="info" style={{ color: "black", fontSize: "1.1rem" }}>
         {splitStatusString(statusString)[1]}
       </Badge>
     </p>
