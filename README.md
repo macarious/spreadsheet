@@ -92,7 +92,7 @@ Figure 7: The Document Manager is collapsible, providing users with the ability 
 
 ## Getting Started
 
-If you are a user, simply go to https://spreadsheet.ec2instance.edu, from there you can input a username and spreadsheet name. Click create and you are good to go!
+If you are a user, simply go to http://ec2-34-217-145-67.us-west-2.compute.amazonaws.com, from there you can input a username and spreadsheet name. Click create and you are good to go!
 
 ## Development
 To help with the development of this proje
