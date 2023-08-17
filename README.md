@@ -90,7 +90,7 @@ Figure 8: The Document Manager is collapsible, providing users with the ability 
 The web app underwent a Lighthouse audit, a Chrome extension assessing performance, accessibility, best practices, and SEO. The screenshot reveals strong accessibility, with a 91 score. Presently, the spreadsheet's cell components lack full accessibility due to calculator implementation, an issue targeted for future improvement.
 
 <div align="center">
-<img src="https://github.com/macarious/spreadsheet/assets/63441014/26cf1786-1cc2-4465-8330-6f9bf73d7730" width="400" />
+<img src="https://github.com/macarious/spreadsheet/assets/63441014/6fa7a99a-d4ca-4805-adfb-e86e4fc1e719" width="400" />
 
 Figure 9: Audit summary from Lighthouse.
 </div>
